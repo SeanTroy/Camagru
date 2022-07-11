@@ -1,0 +1,95 @@
+.gallery {
+	width: 90vw;
+	margin: auto; /* centers the gallery */
+	display: flex; /* makes the gallery items align in a row */
+	flex-wrap: wrap; /* makes the gallery items wrap and switch rows automatically */
+	justify-content: space-evenly; /* sets equal space around gallery items */
+}
+
+#picture_with_buttons {
+	width: 15vw;
+	min-width: 300px;
+}
+
+figure {
+	border: 0.05vw solid;
+	border-radius: 5px;
+	padding: 5px; /* adds padding to all the figure elements */
+	box-sizing: border-box; /* limits the padding inside the figure width */
+	margin: 0.5vw;
+	box-shadow: 1px 1px 5px black; /* drop shadow with 1px distance and 5px softness */
+	background-color: white;
+}
+
+.delete_like_container {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 12px;
+}
+
+.like_container {
+	display: flex;
+	align-items: center;
+}
+
+figure img {
+	width: 100%;
+	display: table
+}
+
+figure figcaption {
+	padding: 0.3vw; /* adds extra padding to the comments */
+	text-align: center;
+	font-size: 12px;
+	word-wrap: break-word /* prevents too long words from overflowing */
+}
+
+#gallery_form {
+	margin: 0.5vw; /* sets the same margin for the delete and comment forms, as in figures */
+}
+
+#gallery_form input[type=text] {
+	width: 100%;
+	margin-bottom: 0.3vw;
+}
+
+#gallery_form button {
+	font-family: inherit;
+}
+
+.pagination {
+	display: flex;
+	align-items: center; /* horizontal alignment */
+	justify-content: center; /* vertical alignment */
+	font-size: 12px;
+}
+
+.pagination a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none; /* removes the underscore */
+	transition: background-color .3s;
+}
+
+/* .pagination a.active {
+	background-color: #4CAF50;
+	color: white;
+} */
+
+.pagination text {
+	padding: 8px 16px;
+}
+
+.pagination a:hover {
+	background-color: #ddd;
+}
+/* :not(.active) */
+
+#image_user_tag {
+	font-size: 10px;
+	margin: 0vw;
+	margin-bottom: 2px;
+}

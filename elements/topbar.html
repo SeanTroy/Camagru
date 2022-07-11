@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="css/camagru.css">
+
+<div class="top">
+	<div class="topbaritems">
+		<?php if (isset($_SESSION['user_id'])) : ?>
+		<a href="profile.php"><button>USER PROFILE</button></a>
+		<a href="capture_image.php"><button>CAPTURE IMAGE</button></a>
+		<a href="gallery.php"><button>GALLERY</button></a>
+		<div class="topuser_logout">
+			User: <?= $_SESSION['loggued_on_user'] ?>
+			<a href="logout.php"><button>LOGOUT</button></a>
+		</div>
+		<?php else : ?>
+		<a href="login.php"><button>LOGIN</button></a>
+		<a href="gallery.php"><button>GALLERY</button></a>
+		<?php endif ?>
+	</div>
+</div>

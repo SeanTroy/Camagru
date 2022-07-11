@@ -1,0 +1,245 @@
+/* general for all the pages */
+
+body {
+	background-color: rgba(205, 206, 223, 0.386);
+	font-family: Neucha;
+	margin: 0;
+}
+
+/* top navigation bar */
+
+.top {
+	width: 100vw;
+	height: 5vw;
+	border: 0;
+	border-bottom: 0.2vw solid;
+	background-color: transparent;
+	margin-top: 1vw;
+	margin-bottom: 1vw;
+	display: flex;
+}
+
+.topbaritems {
+	width: 100%;
+	display: flex;
+	align-items: center; /* centers the items vertically */
+	justify-content: space-evenly;
+}
+
+.topbaritems button {
+	background-color: transparent;
+	border-color: transparent;
+	font-size: clamp(12px, 2vw, 36px);
+	font-family : inherit;
+}
+
+.topuser_logout {
+	display: flex;
+	flex-direction: column;
+	font-size: max(1vw, 6px);
+	justify-content: center;
+	align-items: center;
+}
+
+.topuser_logout button {
+	font-size: max(1.5vw, 9px);
+}
+
+/* capture_image.php */
+
+.editing_area {
+	width: 98vw;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1vw;
+}
+
+.preview_area {
+	width: 78vw;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1vw;
+}
+
+.previous_photos_bar {
+	width: 15vw;
+	height: 44.5vw;
+	min-width: 100px;
+	min-height: 300px;
+	border: 0.05vw solid;
+	border-radius: 5px;
+	overflow: hidden;
+	background-color: white;
+	position: relative;
+	box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
+}
+
+.photo_bar_content {
+	width: 15vw;
+	height: 44.5vw;
+	min-width: 100px;
+	min-height: 300px;
+	overflow-y: scroll;
+}
+
+.capture_preview {
+	border: 0.05vw solid;
+	border-radius: 5px;
+	padding: 1vw;
+	box-sizing: border-box; /* limits the padding inside the figure width */
+	background-color: white;
+	text-align: center;
+	font-size: 18px;
+	position: relative;
+	box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
+}
+
+.capture_preview button {
+	font-family: inherit;
+}
+
+#video, #canvas {
+	width: 36vw;
+	height: 27vw;
+	min-width: 320px;
+	min-height: 240px;
+}
+
+#title_text {
+	padding: 0.3vw; /* adds extra padding to the picture title */
+}
+
+#sticker_preview1, #sticker_preview2 {
+	width: 36vw;
+	height: 27vw;
+	min-width: 320px;
+	min-height: 240px;
+	position: absolute;
+	left: 1vw;
+	top: 1vw;
+	z-index: 1;
+}
+
+.stickerbar {
+	border: 0.05vw solid;
+	border-radius: 5px;
+	width: 99%;
+	min-width: 328px;
+	height: 10vw;
+	overflow: hidden;
+	background-color: white;
+	box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
+}
+
+.stickerbar_content {
+	width: 100%;
+	min-width: 328px;
+	height: 10vw;
+	display: flex;
+	overflow-x: scroll;
+}
+
+.sticker {
+	border: 0.05vw solid;
+	margin: 0.2vw;
+	height: 8vw;
+	background-color: rgb(230, 218, 218);
+	border-radius: 3px;
+}
+
+#saved_photo {
+	width: 12vw;
+	margin: 0.5vw;
+}
+
+.upload_area {
+	margin: 1vw;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5vw;
+}
+
+input[type=file] {
+	font-family: inherit;
+}
+
+/* profile page */
+
+.profile_container {
+	width: 25vw;
+	min-width: 330px;
+	min-height: 500px;
+	border: 0.05vw solid;
+	border-radius: 5px;
+	background-color: white;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 20px 10px;
+	font-size: max(1.2vw, 12px);
+	box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
+}
+
+.profile_container button, input[type=submit] {
+	color: white;
+	border: 0.05vw solid;
+	border-radius: 2px;
+	background-color: blue;
+	width: 23vw;
+	height: 6vw;
+	min-width: 290px;
+	max-height: 25px;
+	font-family : inherit;
+}
+
+input[type=text], input[type=password], input[type=email]  {
+	width: 23vw;
+	min-width: 290px
+}
+
+.profile_form {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#warning_message {
+	width: 23vw;
+	min-width: 290px;
+	color: red;
+}
+
+#success_message {
+	width: 23vw;
+	min-width: 290px;
+	color: green;
+}
+
+/* footer*/
+
+.footer {
+	margin-top: 1vw;
+	position: relative;
+}
+
+#footer_line {
+	border: 0;
+	width: 100vw;
+	height: 0.1vw;
+	background-color:black
+}
+
+#copyright {
+	text-align: right;
+	margin-right: 20px;
+	font-style: italic;
+	font-size: max(1.2vw, 12px);
+}
