@@ -18,7 +18,7 @@ require 'gallery_functions.php';
 	?>
 	<div class="pagination">
 		<a href="?page=1">First</a>
-		<a href="<?php if ($page <= 1) : echo '#';
+		<a href="<?php if ($page == 1) : echo '#';
 					else : echo "?page=" . ($page - 1);
 					endif ?>">&laquo;</a>
 		<text><?= $page . "/" . $total_pages; ?></text>
@@ -39,23 +39,21 @@ require 'gallery_functions.php';
 					<img id="<?= $value['image_id']; ?>" src="<?= $image; ?>">
 					<div class="delete_like_container">
 						<div class="like_container">
-							<?php if (!checkUserLikes($value['image_id'], $pdo)) : ?>
-								<form id="gallery_form" name="like" action="gallery.php?page=<?= $page ?>" method="post">
-									<input type="text" name="like_image_id" value="<?= $value['image_id']; ?>" hidden>
-									<button type="submit" class="like_comment" name="submit" value="like">Like</button>
-								</form>
-							<?php else : ?>
-								<form id="gallery_form" name="unlike" action="gallery.php?page=<?= $page ?>" method="post">
-									<input type="text" name="unlike_image_id" value="<?= $value['image_id']; ?>" hidden>
-									<button type="submit" name="submit" value="unlike">Unlike</button>
-								</form>
-							<?php endif ?>
-							<?= getLikesAmount($value['image_id'], $pdo) ?>
+							<div class="heart_picture">
+								<?php if (!checkUserLikes($value['image_id'], $pdo)) : ?>
+									<img alt="Like" title="Like" id="heart<?= $value['image_id']; ?>" src="icons/heart_empty.png" onclick=changeLikes(this.id)>
+								<?php else : ?>
+									<img alt="Like" title="Like" id="heart<?= $value['image_id']; ?>" src="icons/heart_full.png" onclick=changeLikes(this.id)>
+								<?php endif ?>
+							</div>
+							<p id="likes<?= $value['image_id']; ?>"><?= getLikesAmount($value['image_id'], $pdo) ?></p>
 						</div>
 						<?php if ($value['user_id'] == $_SESSION['user_id']) { ?>
-							<form id="gallery_form" name="delete" action="gallery.php?page=<?= $page ?>" method="post">
+							<form class="trashcan" id="trash<?= $value['image_id']; ?>" action="gallery.php?page=<?= $page ?>" method="post">
 								<input type="text" name="image_id" value="<?= $value['image_id']; ?>" hidden>
-								<button type="submit" id="delete_button" name="submit" value="delete" onclick="return confirm('Are you sure you want to delete this picture?')">Delete</button>
+								<input type="text" name="action" value="delete" hidden>
+								<img class="profile_icon" alt="Make profile picture" title="Make profile picture" src="icons/profile.png">
+								<img class="trash_icon" alt="Delete" title="Delete" src="icons/trashcan.png" onclick="deletePhoto(<?= $value['image_id']; ?>)">
 							</form>
 						<?php } ?>
 					</div>
@@ -75,9 +73,10 @@ require 'gallery_functions.php';
 </body>
 
 <script>
+	let userlogged = document.querySelector('.topuser_logout');
+
 	/* disable like and comment buttons if user not logged in */
 	window.onload = function() {
-		let userlogged = document.querySelector('.topuser_logout');
 
 		if (!userlogged) {
 			let buttons = document.getElementsByClassName("like_comment");
@@ -85,6 +84,36 @@ require 'gallery_functions.php';
 				buttons[i].disabled = true;
 				buttons[i].innerHTML = "Login to like or comment";
 			}
+		}
+	}
+
+	/* delete photo if confirmed */
+	function deletePhoto(image_id) {
+		if (confirm("Are you sure you want to delete this picture?")) {
+			document.getElementById("trash" + image_id).submit();
+		}
+	}
+
+	/* add or delete likes */
+	function changeLikes(like_id) {
+
+		if (userlogged) {
+			let like_button = document.getElementById(like_id);
+			let image_id = like_id.replace("heart", "");
+			let likes = parseInt(document.getElementById('likes' + image_id).innerHTML);
+
+			if (like_button.src.match("icons/heart_full.png")) {
+				like_button.src = "icons/heart_empty.png";
+				document.getElementById('likes' + image_id).innerHTML = (likes - 1);
+			} else {
+				like_button.src = "icons/heart_full.png";
+				document.getElementById('likes' + image_id).innerHTML = (likes + 1);
+			}
+
+			let xml = new XMLHttpRequest();
+			xml.open('post', 'addlikes.php', true);
+			xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xml.send('liked=' + image_id);
 		}
 	}
 </script>

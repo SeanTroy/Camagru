@@ -76,7 +76,7 @@ function getLikesAmount($image_id, $pdo)
 	$likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$likes_amount = $stmt->rowCount();
 
-	return "Likes: " . $likes_amount . "<br>";
+	return $likes_amount . "<br>";
 }
 
 /* function to get the comments for an image */
@@ -98,7 +98,7 @@ function showComments($image_id, $pdo)
 
 /* deletion of images, making sure that user owns the picture */
 
-if ($_POST['submit'] == "delete" && isset($_SESSION['user_id']) && isset($_POST['image_id'])) {
+if ($_POST['action'] == "delete" && isset($_SESSION['user_id']) && isset($_POST['image_id'])) {
 	$sql = "SELECT `user_id` FROM `images` WHERE `image_id` = ?";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([$_POST['image_id']]);
@@ -133,20 +133,6 @@ if (isset($_SESSION['user_id']) && isset($_POST['comment']) && isset($_POST['com
 			'X-Mailer: PHP/' . phpversion();
 		mail($email, 'You have a comment in Camagru!', $message, $headers);
 	}
-	header("Location: gallery.php?page=" . $page, true, 303); /* prevents page refresh from sending the data again */
-}
-
-/* adding and deleting likes */
-
-if ($_POST['submit'] == "like" && isset($_SESSION['user_id']) && isset($_POST['like_image_id'])) {
-	$sql = "INSERT INTO `likes` (`image_id`, `user_id`) VALUES (?, ?)";
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute([$_POST['like_image_id'], $_SESSION['user_id']]);
-	header("Location: gallery.php?page=" . $page, true, 303); /* prevents page refresh from sending the data again */
-} else if ($_POST['submit'] == "unlike" && isset($_SESSION['user_id']) && isset($_POST['unlike_image_id'])) {
-	$sql = "DELETE FROM `likes` WHERE `image_id` = ? AND `user_id` = ?";
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute([$_POST['unlike_image_id'], $_SESSION['user_id']]);
 	header("Location: gallery.php?page=" . $page, true, 303); /* prevents page refresh from sending the data again */
 }
 

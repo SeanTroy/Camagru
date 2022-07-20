@@ -69,6 +69,9 @@ if ($_POST['submit'] == "Change notifications") {
 <body>
 	<?php include 'elements/topbar.html'; ?>
 	<div class="profile_container">
+		<div class="profile_picture">
+			<img id="profile_picture" src="icons/background.jpg">
+		</div>
 		Username: <?= $_SESSION["loggued_on_user"]; ?>
 		<a href="logout.php"><button type="button">Logout</button></a>
 
@@ -84,8 +87,17 @@ if ($_POST['submit'] == "Change notifications") {
 			E-mail notifications: <?= $notify_status; ?>
 			<input type="submit" name="submit" value="Change notifications" />
 		</form>
+		<button type="button" id="delete_user" onclick=deleteUser()>Delete user</button>
 	</div>
 	<?php include 'elements/footer.html'; ?>
 </body>
+
+<script>
+	function deleteUser() {
+		if (confirm("Are you sure you want to delete this user permanently? This will delete all your photos, comments etc.")) {
+			window.location.href = "delete_user.php";
+		}
+	}
+</script>
 
 </html>

@@ -11,6 +11,12 @@
 	min-width: 300px;
 }
 
+#image_user_tag {
+	font-size: 10px;
+	margin: 0vw;
+	margin-bottom: 2px;
+}
+
 figure {
 	border: 0.05vw solid;
 	border-radius: 5px;
@@ -32,6 +38,24 @@ figure {
 .like_container {
 	display: flex;
 	align-items: center;
+}
+
+.heart_picture {
+	width: 30px;
+	cursor: pointer;
+}
+
+.trashcan {
+	height: 20px;
+	display: flex;
+	gap: 5px;
+	padding-top: 5px;
+	cursor: pointer;
+}
+
+.profile_icon, .trash_icon {
+	height: 20px;
+	width: auto;
 }
 
 figure img {
@@ -87,9 +111,3 @@ figure figcaption {
 	background-color: #ddd;
 }
 /* :not(.active) */
-
-#image_user_tag {
-	font-size: 10px;
-	margin: 0vw;
-	margin-bottom: 2px;
-}

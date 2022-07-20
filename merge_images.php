@@ -18,6 +18,7 @@ $width = $sticker_values[3];
 $height = $sticker_values[4];
 
 $image = imagecreatefromstring($image);
+imageflip($image, IMG_FLIP_HORIZONTAL);
 $sticker = imagecreatefromstring($sticker);
 $sticker = imagescale($sticker, $width, $height);
 

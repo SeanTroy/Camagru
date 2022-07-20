@@ -67,7 +67,9 @@ if (isset($_POST["login"]) && isset($_POST["passwd"]) && auth($pdo, $_POST["logi
 			<input type="submit" name="submit" value="OK" />
 		</form>
 		<a href="password_reset.php"><button>Forgot Password</button></a>
-		<a href="signup.php"><button>Create user account</button></a>
+		<hr id="divider_line">
+		<h3>NOT SIGNED UP YET?</h3>
+		<a href="signup.php"><button>Create new user account</button></a>
 		<p id="warning_message"><?= $warning_message ?></p>
 		<p id="success_message"><?= $success_message ?></p>
 	</div>
