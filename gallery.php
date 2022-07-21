@@ -49,10 +49,14 @@ require 'gallery_functions.php';
 							<p id="likes<?= $value['image_id']; ?>"><?= getLikesAmount($value['image_id'], $pdo) ?></p>
 						</div>
 						<?php if ($value['user_id'] == $_SESSION['user_id']) { ?>
-							<form class="trashcan" id="trash<?= $value['image_id']; ?>" action="gallery.php?page=<?= $page ?>" method="post">
+							<form class="trash_and_profile" id="trash<?= $value['image_id']; ?>" action="gallery.php?page=<?= $page ?>" method="post">
 								<input type="text" name="image_id" value="<?= $value['image_id']; ?>" hidden>
 								<input type="text" name="action" value="delete" hidden>
-								<img class="profile_icon" alt="Make profile picture" title="Make profile picture" src="icons/profile.png">
+								<?php if ($profile_pict_id != $value['image_id']) : ?>
+									<img class="profile_icon" alt="Make profile picture" title="Make profile picture" src="icons/profile.png" onclick="setProfile(this, <?= $value['image_id']; ?>)">
+								<?php else : ?>
+									<img id="profile_icon_select" alt="Remove profile picture" title="Remove profile picture" src="icons/profile_selected.png" onclick="setProfile(this, <?= $value['image_id']; ?>)">
+								<?php endif ?>
 								<img class="trash_icon" alt="Delete" title="Delete" src="icons/trashcan.png" onclick="deletePhoto(<?= $value['image_id']; ?>)">
 							</form>
 						<?php } ?>
@@ -115,6 +119,36 @@ require 'gallery_functions.php';
 			xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xml.send('liked=' + image_id);
 		}
+	}
+
+	/* set profile picture */
+	function setProfile(profile_icon, image_id) {
+		let profile_picture = document.getElementById('top-profilepic');
+		let former_profile_icon = document.getElementById('profile_icon_select');
+
+		if (profile_icon.src.match("icons/profile.png")) {
+			profile_icon.src = "icons/profile_selected.png";
+			profile_icon.id = "profile_icon_select";
+			profile_icon.title = "Remove profile picture";
+			if (former_profile_icon) {
+				former_profile_icon.src = "icons/profile.png";
+				former_profile_icon.id = "";
+				former_profile_icon.title = "Make profile picture";
+			}
+		} else {
+			profile_icon.src = "icons/profile.png";
+			profile_icon.id = "";
+			profile_icon.title = "Make profile picture";
+		}
+
+		let xml = new XMLHttpRequest();
+		xml.open('post', 'profile_pics.php', true);
+		xml.onload = function() {
+			profile_picture.src = this.response;
+			// profile_picture.style = "margin-left: -15%;";
+		}
+		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xml.send('setpic=' + image_id);
 	}
 </script>
 

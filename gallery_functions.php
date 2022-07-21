@@ -20,6 +20,19 @@ $total_pages = CEIL($total_images / $images_per_page);
 if (!$total_pages)
 	$total_pages = 1;
 
+/* check the current users profile picture */
+
+if (isset($_SESSION['user_id'])) {
+	try {
+		$sql = "SELECT image_id FROM profile_pics WHERE `user_id` = ?";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute([$_SESSION['user_id']]);
+		$profile_pict_id = $stmt->fetchColumn();
+	} catch (PDOException $e) {
+		print("Error!: " . $e->getMessage() . "<br/>");
+	}
+}
+
 /* function to check if the owner of the image has notifications allowed */
 
 function checkImageNotification($image_id, $sender_id, $pdo)

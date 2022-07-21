@@ -1,3 +1,28 @@
+<?php
+
+require_once 'config/newpdo.php';
+
+function getProfilePicture($pdo) {
+	try {$sql = "SELECT * FROM profile_pics
+	INNER JOIN images ON profile_pics.image_id = images.image_id
+	WHERE profile_pics.user_id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$_SESSION['user_id']]);
+$profile_pic = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+print("Error!: " . $e->getMessage() . "<br/>");
+}
+
+if ($profile_pic) {
+	$profile_pict_id = $profile_pic['image_id'];
+	echo "data:image/jpeg;base64," . $profile_pic['image_data'];
+} else {
+echo "icons/background.jpg";
+}
+}
+
+?>
+
 <link rel="stylesheet" href="css/camagru.css">
 
 <div class="top">
@@ -7,9 +32,15 @@
 		<a href="profile.php"><button>USER PROFILE</button></a>
 		<a href="capture_image.php"><button>CAPTURE IMAGE</button></a>
 		<a href="gallery.php"><button>GALLERY</button></a>
-		<div class="topuser_logout">
-			User: <?= $_SESSION['loggued_on_user'] ?>
-			<a href="logout.php"><button>LOGOUT</button></a>
+		<div class="topuser_info">
+			<div class="topuser_logout">
+				User:
+				<?= $_SESSION['loggued_on_user'] ?>
+				<a href="logout.php"><button>LOGOUT</button></a>
+			</div>
+			<div class="top-profilepic">
+				<img id="top-profilepic" src="<?= getProfilePicture($pdo); ?>">
+			</div>
 		</div>
 		<?php else : ?>
 		<a href="login.php"><button>LOGIN</button></a>

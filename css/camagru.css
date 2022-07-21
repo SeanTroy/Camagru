@@ -54,12 +54,29 @@ body::before {
 	cursor: pointer;
 }
 
+.topuser_info {
+	display: flex;
+	align-items: center;
+}
+
 .topuser_logout {
 	display: flex;
 	flex-direction: column;
 	font-size: max(1vw, 6px);
 	justify-content: center;
 	align-items: center;
+}
+
+.top-profilepic {
+	width: 3vw;
+	height: 3vw;
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+#top-profilepic {
+	height: 3vw;
+	width: auto;
 }
 
 .topuser_logout button {
@@ -220,10 +237,10 @@ input[type=file] {
 
 #profile_picture {
 	display: inline;
-	width: 10vw;
-	min-width: 150px;
-	height: auto;
-	/* margin-left: -25%; */
+	height: 10vw;
+	min-height: 150px;
+	width: auto;
+	/* margin-left: -15%; */
 }
 
 .profile_container button, input[type=submit] {

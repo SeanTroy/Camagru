@@ -23,7 +23,7 @@ if (!isset($_SESSION['user_id'])) {
 				<video id="video" autoplay></video>
 				<canvas id="sticker_preview1" width="640" height="480"></canvas>
 				<figcaption id="title_text">Webcam</figcaption>
-				<button id="take-photo" disabled>Take Photo</button>
+				<button id="take-photo" disabled>Select Sticker</button>
 			</div>
 			<div class="capture_preview">
 				<canvas id="canvas" width="640" height="480"></canvas>
@@ -99,7 +99,6 @@ if (!isset($_SESSION['user_id'])) {
 		xml.open('post', 'merge_images.php', true);
 		xml.onload = function() {
 			alert("Image saved to Gallery!");
-			// console.log('RETURN_VALUE', this.response);
 			appendPhotoBar(this.response);
 		}
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -141,10 +140,13 @@ if (!isset($_SESSION['user_id'])) {
 
 	function drawSticker(sticker, h_offset, v_offset, width, height) {
 		/* enable the take photo button */
-		if (sticker.id == "empty.png")
+		if (sticker.id == "empty.png") {
 			document.getElementById("take-photo").disabled = true;
-		else
+			document.getElementById("take-photo").innerHTML = "Select Sticker";
+		} else {
 			document.getElementById("take-photo").disabled = false;
+			document.getElementById("take-photo").innerHTML = "Take Photo";
+		}
 		/* clear previous sticker from preview screens */
 		preview1.getContext('2d').clearRect(0, 0, preview1.width, preview1.height);
 		preview2.getContext('2d').clearRect(0, 0, preview2.width, preview2.height);

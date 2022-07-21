@@ -93,6 +93,21 @@ if ($_POST['submit'] == "Change notifications") {
 </body>
 
 <script>
+	window.onload = function() {
+		let profile_picture = document.getElementById('profile_picture');
+
+		let xml = new XMLHttpRequest();
+		xml.open('post', 'profile_pics.php', true);
+		xml.onload = function() {
+			profile_picture.src = this.response;
+			if (this.response != "icons/background.jpg") {
+				profile_picture.style="margin-left: -15%;";
+			}
+		}
+		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xml.send();
+	}
+
 	function deleteUser() {
 		if (confirm("Are you sure you want to delete this user permanently? This will delete all your photos, comments etc.")) {
 			window.location.href = "delete_user.php";

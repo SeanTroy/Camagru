@@ -45,7 +45,7 @@ figure {
 	cursor: pointer;
 }
 
-.trashcan {
+.trash_and_profile {
 	height: 20px;
 	display: flex;
 	gap: 5px;
@@ -53,7 +53,7 @@ figure {
 	cursor: pointer;
 }
 
-.profile_icon, .trash_icon {
+.profile_icon, #profile_icon_select, .trash_icon {
 	height: 20px;
 	width: auto;
 }

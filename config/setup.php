@@ -58,3 +58,11 @@ $sql = "CREATE TABLE IF NOT EXISTS `email_change` (
 	`change_code` INT(11) NOT NULL
 )";
 $pdo->exec($sql);
+
+// Create the 'profile_pics' table
+$sql = "CREATE TABLE IF NOT EXISTS `profile_pics` (
+	`key` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`user_id` INT(11) NOT NULL,
+	`image_id` INT(11) NOT NULL
+)";
+$pdo->exec($sql);
