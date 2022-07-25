@@ -117,17 +117,23 @@ if (!isset($_SESSION['user_id'])) {
 		xml.send('new_image='+image_data_url+'&sticker='+sticker);
 	});
 
-	/* upload and draw image to canvas */
+	/* upload and draw image to canvas, considering file size */
 
 	const image_upload = document.getElementById("image-upload");
 
 	image_upload.addEventListener("change", function() {
-		/* enable the save photo button */
-		document.getElementById("save-photo").disabled = false;
+		if (this.files[0].size > 2097152) {
+			alert("File is too big! Maximum size is 2Mb.");
+			this.value = "";
+		}
+		if (this.value !== "") {
+			document.getElementById("save-photo").disabled = false;
 
-		var img = new Image();
-		img.src = URL.createObjectURL(this.files[0]);
-		img.onload = drawImage;
+			var img = new Image();
+			img.src = URL.createObjectURL(this.files[0]);
+			img.onload = drawImage;
+			this.value = "";
+		}
 	});
 
 	function drawImage() {
