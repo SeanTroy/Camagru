@@ -145,7 +145,11 @@ require 'gallery_functions.php';
 		xml.open('post', 'profile_pics.php', true);
 		xml.onload = function() {
 			profile_picture.src = this.response;
-			// profile_picture.style = "margin-left: -15%;";
+			// if (this.response != "icons/background.jpg") {
+			// 	profile_picture.style = "margin-left: -15%;";
+			// } else {
+			// 	profile_picture.style = "margin-left: 0%;";
+			// }
 		}
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xml.send('setpic=' + image_id);
