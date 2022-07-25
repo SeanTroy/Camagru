@@ -20,10 +20,11 @@ if (!isset($_SESSION['user_id'])) {
 	<div class="editing_area">
 		<div class="preview_area">
 			<div class="capture_preview">
-				<video id="video" autoplay></video>
-				<canvas id="sticker_preview1" width="640" height="480"></canvas>
-				<figcaption id="title_text">Webcam</figcaption>
-				<button id="take-photo" disabled>Select Sticker</button>
+				<video id="video" autoplay playsinline></video>
+				<! -- 'playsinline' makes the video play in the canvas in mobile -->
+					<canvas id="sticker_preview1" width="640" height="480"></canvas>
+					<figcaption id="title_text">Webcam</figcaption>
+					<button id="take-photo" disabled>Select Sticker</button>
 			</div>
 			<div class="capture_preview">
 				<canvas id="canvas" width="640" height="480"></canvas>
@@ -72,12 +73,23 @@ if (!isset($_SESSION['user_id'])) {
 	let preview1 = document.getElementById("sticker_preview1");
 	let preview2 = document.getElementById("sticker_preview2");
 
-	/* start webcam when entering the page and output to video element */
+	/* start webcam when entering the page and output to video element, considering orientation */
 
 	window.onload = async function(){
-		let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-		video.srcObject = stream;
+		if (window.matchMedia("(orientation: portrait)").matches) {
+			let videoMode = {aspectRatio: 3/4, facingMode: 'user'};
+			let stream = await navigator.mediaDevices.getUserMedia({ video: videoMode, audio: false });
+			video.srcObject = stream;
+		} else {
+			let videoMode = {aspectRatio: 4/3, facingMode: 'user'};
+			let stream = await navigator.mediaDevices.getUserMedia({ video: videoMode, audio: false });
+			video.srcObject = stream;
+		}
 	}
+
+	// screen.orientation.addEventListener('change', function() {
+	// 	alert('Current orientation is ' + screen.orientation.type);
+	// });
 
 	/* draw video frame to canvas */
 
@@ -112,13 +124,6 @@ if (!isset($_SESSION['user_id'])) {
 	image_upload.addEventListener("change", function() {
 		/* enable the save photo button */
 		document.getElementById("save-photo").disabled = false;
-
-		// const reader = new FileReader();
-
-		// reader.addEventListener("load", () => {
-		// let uploaded_image_url = reader.result;
-		// });
-		// reader.readAsDataURL(this.files[0]);
 
 		var img = new Image();
 		img.src = URL.createObjectURL(this.files[0]);
