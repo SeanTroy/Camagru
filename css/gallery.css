@@ -1,5 +1,5 @@
 .gallery {
-	width: 90vw;
+	width: 95vw;
 	margin: auto; /* centers the gallery */
 	display: flex; /* makes the gallery items align in a row */
 	flex-wrap: wrap; /* makes the gallery items wrap and switch rows automatically */
@@ -9,6 +9,12 @@
 #picture_with_buttons {
 	width: 15vw;
 	min-width: 300px;
+}
+
+@media (orientation: portrait) and (hover: none) {
+	#picture_with_buttons {
+	width: 95vw;
+	}
 }
 
 #image_user_tag {
