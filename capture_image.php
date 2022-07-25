@@ -76,7 +76,7 @@ if (!isset($_SESSION['user_id'])) {
 	/* start webcam when entering the page and output to video element, considering orientation */
 
 	window.onload = async function(){
-		if (window.matchMedia("(orientation: portrait)").matches) {
+		if (window.matchMedia("(orientation: portrait)").matches && window.matchMedia("(hover: none)").matches) {
 			let videoMode = {aspectRatio: 3/4, facingMode: 'user'};
 			let stream = await navigator.mediaDevices.getUserMedia({ video: videoMode, audio: false });
 			video.srcObject = stream;
