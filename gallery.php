@@ -61,7 +61,7 @@ require 'gallery_functions.php';
 							</form>
 						<?php } ?>
 					</div>
-					<figcaption>
+					<figcaption id="caption<?= $value['image_id']; ?>">
 						<?= showComments($value['image_id'], $pdo) ?>
 					</figcaption>
 				</figure>
@@ -115,7 +115,7 @@ require 'gallery_functions.php';
 			}
 
 			let xml = new XMLHttpRequest();
-			xml.open('post', 'addlikes.php', true);
+			xml.open('post', 'likesandcomments.php', true);
 			xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xml.send('liked=' + image_id);
 		}
@@ -156,25 +156,18 @@ require 'gallery_functions.php';
 	}
 
 	/* delete comment */
-	function deleteComment(comment_id) {
+	function deleteComment(comment_id, image_id) {
 		if (confirm("Are you sure you want to delete this comment?")) {
 
-			// let like_button = document.getElementById(like_id);
-			// let image_id = like_id.replace("heart", "");
-			// let likes = parseInt(document.getElementById('likes' + image_id).innerHTML);
+			let caption = document.getElementById('caption' + image_id);
 
-			// if (like_button.src.match("icons/heart_full.png")) {
-			// 	like_button.src = "icons/heart_empty.png";
-			// 	document.getElementById('likes' + image_id).innerHTML = (likes - 1);
-			// } else {
-			// 	like_button.src = "icons/heart_full.png";
-			// 	document.getElementById('likes' + image_id).innerHTML = (likes + 1);
-			// }
-
-			// let xml = new XMLHttpRequest();
-			// xml.open('post', 'addlikes.php', true);
-			// xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			// xml.send('liked=' + image_id);
+			let xml = new XMLHttpRequest();
+			xml.open('post', 'likesandcomments.php', true);
+			xml.onload = function() {
+				caption.innerHTML = this.response;
+			}
+			xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xml.send('action=del_comment&comment_id=' + comment_id + '&image_id=' + image_id);
 		}
 	}
 </script>

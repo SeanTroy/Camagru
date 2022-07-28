@@ -71,9 +71,21 @@ figure img {
 
 figure figcaption {
 	padding: 0.3vw; /* adds extra padding to the comments */
+}
+
+.comment {
 	text-align: center;
 	font-size: clamp(12px, 1vw, 18px);
-	word-wrap: break-word /* prevents too long words from overflowing */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	word-break: break-all; /* prevents too long words from overflowing */
+}
+
+.del_comment {
+	height: 15px;
+	width: auto;
+	cursor: pointer;
 }
 
 #gallery_form {
