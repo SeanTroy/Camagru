@@ -154,6 +154,29 @@ require 'gallery_functions.php';
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xml.send('setpic=' + image_id);
 	}
+
+	/* delete comment */
+	function deleteComment(comment_id) {
+		if (confirm("Are you sure you want to delete this comment?")) {
+
+			// let like_button = document.getElementById(like_id);
+			// let image_id = like_id.replace("heart", "");
+			// let likes = parseInt(document.getElementById('likes' + image_id).innerHTML);
+
+			// if (like_button.src.match("icons/heart_full.png")) {
+			// 	like_button.src = "icons/heart_empty.png";
+			// 	document.getElementById('likes' + image_id).innerHTML = (likes - 1);
+			// } else {
+			// 	like_button.src = "icons/heart_full.png";
+			// 	document.getElementById('likes' + image_id).innerHTML = (likes + 1);
+			// }
+
+			// let xml = new XMLHttpRequest();
+			// xml.open('post', 'addlikes.php', true);
+			// xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			// xml.send('liked=' + image_id);
+		}
+	}
 </script>
 
 </html>

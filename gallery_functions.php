@@ -105,7 +105,11 @@ function showComments($image_id, $pdo)
 
 	$comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($comments as $key => $text) {
-		echo $text['name'] . ": " . $text['comment'] . "<br>";
+		echo $text['name'] . ": " . $text['comment'] . " ";
+		if ($text['name'] === $_SESSION['loggued_on_user']) {
+			echo '<img class="trash_icon" alt="Delete" title="Delete comment" src="icons/trashcan.png" onclick="deleteComment(' . $text['comment_id'] . ')">';
+			echo "<br>";
+		}
 	}
 }
 
