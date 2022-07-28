@@ -88,7 +88,7 @@ figure figcaption {
 	cursor: pointer;
 }
 
-#gallery_form {
+.gallery_form {
 	margin: 0.5vw; /* sets the same margin for the delete and comment forms, as in figures */
 }
 

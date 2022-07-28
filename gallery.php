@@ -65,10 +65,10 @@ require 'gallery_functions.php';
 						<?= showComments($value['image_id'], $pdo) ?>
 					</figcaption>
 				</figure>
-				<form id="gallery_form" name="comment" action="gallery.php?page=<?= $page ?>" method="post">
+				<form class="gallery_form" id="gallery_form<?= $value['image_id']; ?>" method="post">
 					<input type="text" name="comment_img_id" value="<?= $value['image_id']; ?>" hidden>
 					<input type="text" class="like_comment" name="comment" maxlength="160" autocomplete="off" required>
-					<button type="submit" class="like_comment">Add comment</button>
+					<button class="like_comment" onclick="addComment(<?= $value['image_id']; ?>)">Add comment</button>
 				</form>
 			</div>
 		<?php } ?>
@@ -133,11 +133,13 @@ require 'gallery_functions.php';
 			if (former_profile_icon) {
 				former_profile_icon.src = "icons/profile.png";
 				former_profile_icon.id = "";
+				former_profile_icon.style = "height: 20px; width: auto;";
 				former_profile_icon.title = "Make profile picture";
 			}
 		} else {
 			profile_icon.src = "icons/profile.png";
 			profile_icon.id = "";
+			profile_icon.style = "height: 20px; width: auto;";
 			profile_icon.title = "Make profile picture";
 		}
 
@@ -153,6 +155,29 @@ require 'gallery_functions.php';
 		}
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xml.send('setpic=' + image_id);
+	}
+
+	/* add comment */
+
+	function addComment(image_id) {
+		function sendData(form, image_id) {
+			let caption = document.getElementById('caption' + image_id);
+			let formData = new FormData(form);
+
+			let xml = new XMLHttpRequest();
+			xml.open('post', 'likesandcomments.php', true);
+			xml.onload = function() {
+				caption.innerHTML = this.response;
+			}
+			xml.send(formData);
+		}
+
+		let form = document.getElementById('gallery_form' + image_id);
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			sendData(form, image_id);
+			form.reset();
+		});
 	}
 
 	/* delete comment */
