@@ -50,6 +50,6 @@ if (isset($_SESSION['user_id'])) {
 	if ($profile_pic) {
 		echo "data:image/jpeg;base64," . $profile_pic['image_data'];
 	} else {
-		echo "icons/background.jpg";
+		echo "icons/background_orig.jpg";
 	}
 }

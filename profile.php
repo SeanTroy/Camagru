@@ -100,7 +100,7 @@ if ($_POST['submit'] == "Change notifications") {
 		xml.open('post', 'profile_pics.php', true);
 		xml.onload = function() {
 			profile_picture.src = this.response;
-			if (this.response != "icons/background.jpg") {
+			if (this.response != "icons/background_orig.jpg") {
 				profile_picture.style="margin-left: -15%;";
 			}
 		}
