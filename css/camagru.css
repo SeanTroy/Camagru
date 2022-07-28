@@ -236,6 +236,7 @@ input[type=file] {
 	position: relative;
 	overflow: hidden;
 	border-radius: 50%;
+	margin-top: 0.5vw;
 }
 
 #profile_picture {
@@ -279,6 +280,7 @@ input[type=text], input[type=password], input[type=email]  {
 
 #delete_user {
 	background-color: rgb(254,72,0);
+	margin-bottom: 0.5vw;
 }
 
 #warning_message {

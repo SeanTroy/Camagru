@@ -93,7 +93,7 @@ figure figcaption {
 	display: flex;
 	align-items: center; /* horizontal alignment */
 	justify-content: center; /* vertical alignment */
-	font-size: 12px;
+	font-size: clamp(12px, 1vw, 16px);
 }
 
 .pagination a {
