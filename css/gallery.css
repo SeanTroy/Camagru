@@ -18,7 +18,7 @@
 }
 
 #image_user_tag {
-	font-size: 10px;
+	font-size: clamp(10px, 1vw, 16px);
 	margin: 0vw;
 	margin-bottom: 2px;
 }
@@ -72,7 +72,7 @@ figure img {
 figure figcaption {
 	padding: 0.3vw; /* adds extra padding to the comments */
 	text-align: center;
-	font-size: 12px;
+	font-size: clamp(12px, 1vw, 18px);
 	word-wrap: break-word /* prevents too long words from overflowing */
 }
 

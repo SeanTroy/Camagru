@@ -1,17 +1,20 @@
 /* general for all the pages */
 
 body {
-	background-color: rgba(205, 206, 223, 0.386);
-	font-family: Neucha;
-	margin: 0;
-}
-
-body::before {
-	content: "";
 	background-image: url("../icons/background.jpg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover; /* scales the image until it has met the actual height / width */
+	font-family: Neucha;
+	margin: 0;
+}
+
+/* body::before {
+	content: "";
+	background-image: url("../icons/background.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover; scales the image until it has met the actual height / width
 	position: absolute;
 	top: 0px;
 	right: 0px;
@@ -19,7 +22,7 @@ body::before {
 	left: 0px;
 	opacity: 0.15;
 	z-index: -100;
-}
+} */
 
 /* top navigation bar */
 
