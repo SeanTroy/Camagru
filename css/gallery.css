@@ -1,5 +1,5 @@
 .gallery {
-	width: 95vw;
+	width: 100vw;
 	margin: auto; /* centers the gallery */
 	display: flex; /* makes the gallery items align in a row */
 	flex-wrap: wrap; /* makes the gallery items wrap and switch rows automatically */
@@ -7,8 +7,8 @@
 }
 
 #picture_with_buttons {
-	width: 20vw;
-	min-width: 300px;
+	width: 19vw;
+	min-width: 320px;
 }
 
 @media (orientation: portrait) and (hover: none) {
@@ -90,14 +90,23 @@ figure figcaption {
 
 .gallery_form {
 	margin: 0.5vw; /* sets the same margin for the delete and comment forms, as in figures */
+	width: 100%;
 }
 
-#gallery_form input[type=text] {
-	width: 100%;
+.gallery_form input[type=text] {
+	width: 18vw;
+	min-width: 310px;
 	margin-bottom: 0.3vw;
 }
 
-#gallery_form button {
+@media (orientation: portrait) and (hover: none) {
+	.gallery_form input[type=text] {
+		width: 95vw;
+		margin-bottom: 0.3vw;
+	}
+}
+
+.gallery_form button {
 	font-family: inherit;
 }
 

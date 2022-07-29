@@ -125,6 +125,39 @@ body {
 	overflow-y: scroll;
 }
 
+#saved_photo {
+	width: 12vw;
+	margin: 0.5vw;
+}
+
+@media (orientation: portrait) and (hover: none) {
+	.previous_photos_bar {
+		width: 86vw;
+		height: 12vw;
+		min-width: 300px;
+		min-height: 100px;
+		border: 0.05vw solid;
+		border-radius: 5px;
+		overflow: hidden;
+		background-color: white;
+		position: relative;
+		box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
+	}
+
+	.photo_bar_content {
+		width: 86vw;
+		height: 12vw;
+		min-width: 300px;
+		min-height: 100px;
+		overflow-x: scroll;
+	}
+
+	#saved_photo {
+		width: 30vw;
+		margin: 0.5vw;
+	}
+}
+
 .capture_preview {
 	border: 0.05vw solid;
 	border-radius: 5px;
@@ -189,11 +222,6 @@ body {
 	height: 8vw;
 	background-color: rgb(230, 218, 218);
 	border-radius: 3px;
-}
-
-#saved_photo {
-	width: 12vw;
-	margin: 0.5vw;
 }
 
 .upload_area {
@@ -323,4 +351,69 @@ input[type=text], input[type=password], input[type=email]  {
 	width: 23vw;
 	min-width: 290px;
 	margin-bottom: 0;
+}
+
+/* index page */
+
+.index_container {
+	width: 64vw;
+	max-height: 48vw;
+	overflow: hidden;
+	border: 0.05vw solid;
+	border-radius: 5px;
+	background-color: white;
+	margin: auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	font-size: max(1.2vw, 12px);
+	box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
+}
+
+.index_picture {
+	width: 15vw;
+	margin: 0.5vw;
+	margin-bottom: 0.2vw;
+	transition: opacity 0.5s ease-in-out;
+}
+
+.index_container h3 {
+	position: absolute;
+	top: 22vw;
+	font-size: 6vw;
+	color: white;
+	text-shadow: 5px 5px 5px black; /* drop shadow with 5px distance and 10px softness */
+	transition: opacity 0.5s ease-in-out;
+}
+
+@media (orientation: portrait) and (hover: none) {
+	.index_container {
+		width: 96vw;
+		max-height: 150vw;
+		overflow: hidden;
+		border: 0.05vw solid;
+		border-radius: 5px;
+		background-color: white;
+		margin: auto;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		font-size: max(1.2vw, 12px);
+		box-shadow: 3px 3px 5px black; /* drop shadow with 5px distance and 10px softness */
+	}
+
+	.index_picture {
+		width: 30vw;
+		margin: 1vw;
+		margin-bottom: 0.2vw;
+	}
+
+	.index_container h3 {
+		position: absolute;
+		top: 63vw;
+		font-size: 10vw;
+		color: white;
+		text-shadow: 5px 5px 5px black; /* drop shadow with 5px distance and 10px softness */
+		transition: opacity 0.5s ease-in-out;
+	}
 }
