@@ -114,7 +114,7 @@ if ($_POST['action'] == "delete" && isset($_SESSION['user_id']) && isset($_POST[
 	}
 	if ($total_images % $images_per_page == 1)
 		$page = $page - 1;
-	header("Location: gallery.php?page=" . $page, true, 303); /* prevents page refresh from sending the data again */
+	header("Location: gallery.php?page=" . $page . "&paginate=" . $images_per_page, true, 303); /* prevents page refresh from sending the data again */
 }
 
 /* displaying the required images for the page */
