@@ -29,9 +29,13 @@ echo "icons/background_orig.jpg";
 	<div class="topbaritems">
 		<a href="index.php"><img id="top-logo" src="icons/polaroid_logo.png"></a>
 		<?php if (isset($_SESSION['user_id'])) : ?>
-		<a href="profile.php"><button>USER PROFILE</button></a>
-		<a href="capture_image.php"><button>CAPTURE IMAGE</button></a>
-		<a href="gallery.php"><button>GALLERY</button></a>
+			<a href="profile.php"><button>USER PROFILE</button></a>
+			<a href="capture_image.php"><button>CAPTURE IMAGE</button></a>
+			<?php if (isset($_GET['paginate'])) : ?>
+				<a href="<?="gallery.php?page=1&paginate=" . $_GET['paginate']; ?>"><button>GALLERY</button></a>
+			<?php else : ?>
+				<a href="gallery.php?page=1&paginate=10"><button>GALLERY</button></a>
+			<?php endif ?>
 		<div class="topuser_info">
 			<div class="topuser_logout">
 				User:
@@ -43,8 +47,12 @@ echo "icons/background_orig.jpg";
 			</div>
 		</div>
 		<?php else : ?>
-		<a href="login.php"><button>LOGIN</button></a>
-		<a href="gallery.php"><button>GALLERY</button></a>
+			<a href="login.php"><button>LOGIN</button></a>
+			<?php if (isset($_GET['paginate'])) : ?>
+				<a href="<?="gallery.php?page=1&paginate=" . $_GET['paginate']; ?>"><button>GALLERY</button></a>
+			<?php else : ?>
+				<a href="gallery.php?page=1&paginate=10"><button>GALLERY</button></a>
+			<?php endif ?>
 		<?php endif ?>
 	</div>
 </div>

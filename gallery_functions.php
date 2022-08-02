@@ -8,7 +8,12 @@ if (isset($_GET['page'])) {
 	$page = 1;
 }
 
-$images_per_page = 10;
+if (isset($_GET['paginate'])) {
+	$images_per_page = $_GET['paginate'];
+} else {
+	$images_per_page = 10;
+}
+
 $offset = ($page - 1) * $images_per_page;
 
 $sql = "SELECT * FROM `images`";

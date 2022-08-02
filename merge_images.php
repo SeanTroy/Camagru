@@ -18,7 +18,8 @@ if (isset($_SESSION['user_id']) && isset($_POST['new_image']) && isset($_POST['s
 	$height = $sticker_values[4];
 
 	$image = imagecreatefromstring($image);
-	imageflip($image, IMG_FLIP_HORIZONTAL);
+	if ($_POST['uploaded'] == "N")
+		imageflip($image, IMG_FLIP_HORIZONTAL);
 	$sticker = imagecreatefromstring($sticker);
 	$sticker = imagescale($sticker, $width, $height);
 

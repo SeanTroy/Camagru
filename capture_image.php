@@ -69,9 +69,9 @@ if (!isset($_SESSION['user_id'])) {
 	let click_button = document.getElementById("take-photo");
 	let canvas = document.getElementById("canvas");
 	let save_button = document.getElementById("save-photo");
-
-	let preview1 = document.getElementById("sticker_preview1");
 	let preview2 = document.getElementById("sticker_preview2");
+	let preview1 = document.getElementById("sticker_preview1");
+	var uploaded = "N";
 
 	/* start webcam when entering the page and output to video element, considering orientation */
 
@@ -87,13 +87,11 @@ if (!isset($_SESSION['user_id'])) {
 		}
 	}
 
-	// screen.orientation.addEventListener('change', function() {
-	// 	alert('Current orientation is ' + screen.orientation.type);
-	// });
-
 	/* draw video frame to canvas */
 
 	click_button.addEventListener('click', function() {
+		canvas.style = "transform: scaleX(-1);"
+		uploaded = "N";
 		canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
 		/* enable the save photo button */
@@ -106,7 +104,6 @@ if (!isset($_SESSION['user_id'])) {
 		let image_data_url = canvas.toDataURL('image/jpeg');
 		let sticker = document.getElementById("selected_sticker").value;
 
-		// console.log("this is before: "+sticker);
 		let xml = new XMLHttpRequest();
 		xml.open('post', 'merge_images.php', true);
 		xml.onload = function() {
@@ -114,7 +111,7 @@ if (!isset($_SESSION['user_id'])) {
 			appendPhotoBar(this.response);
 		}
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xml.send('new_image='+image_data_url+'&sticker='+sticker);
+		xml.send('new_image='+image_data_url+'&sticker='+sticker+'&uploaded='+uploaded);
 	});
 
 	/* upload and draw image to canvas, considering file size */
@@ -127,6 +124,8 @@ if (!isset($_SESSION['user_id'])) {
 			this.value = "";
 		}
 		if (this.value !== "") {
+			canvas.style = "transform: scaleX(1);"
+			uploaded = "Y";
 			document.getElementById("save-photo").disabled = false;
 
 			var img = new Image();
@@ -177,7 +176,6 @@ if (!isset($_SESSION['user_id'])) {
 
 		let sticker = document.getElementById(sticker_values[0]);
 		drawSticker(sticker, x, y, sticker_values[3], sticker_values[4]);
-    	// console.log("x: " + x + " y: " + y)
 	}
 
 	preview1.addEventListener('mousedown', function(e) {

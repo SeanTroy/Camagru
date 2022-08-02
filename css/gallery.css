@@ -125,11 +125,6 @@ figure figcaption {
 	transition: background-color .3s;
 }
 
-/* .pagination a.active {
-	background-color: #4CAF50;
-	color: white;
-} */
-
 .pagination text {
 	padding: 8px 16px;
 }
@@ -137,4 +132,11 @@ figure figcaption {
 .pagination a:hover {
 	background-color: #ddd;
 }
-/* :not(.active) */
+
+#photo_select {
+	padding: 8px;
+}
+
+#photo_amount {
+	font-family: inherit;
+}

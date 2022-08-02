@@ -17,15 +17,25 @@ require 'gallery_functions.php';
 	include 'elements/topbar.html';
 	?>
 	<div class="pagination">
-		<a href="?page=1">First</a>
+		<a href=<?= "?page=1" . "&paginate=" . $images_per_page; ?>>First</a>
 		<a href="<?php if ($page == 1) : echo '#';
-					else : echo "?page=" . ($page - 1);
+					else : echo "?page=" . ($page - 1) . "&paginate=" . $images_per_page;
 					endif ?>">&laquo;</a>
 		<text><?= $page . "/" . $total_pages; ?></text>
 		<a href="<?php if ($page >= $total_pages) : echo '#';
-					else : echo "?page=" . ($page + 1);
+					else : echo "?page=" . ($page + 1) . "&paginate=" . $images_per_page;
 					endif ?>">&raquo;</a>
-		<a href="?page=<?= $total_pages; ?>">Last</a>
+		<a href="?page=<?= $total_pages . "&paginate=" . $images_per_page; ?>">Last</a><br>
+		<nav>
+			<text id="photo_select">Photos per page:</text>
+			<select id="photo_amount" onChange="window.location.href=this.value" name="categories" id="categories">
+				<option value="?paginate=5">5</option>
+				<option value="?paginate=10">10</option>
+				<option value="?paginate=20">20</option>
+				<option value="?paginate=50">50</option>
+				<option value="?paginate=100">100</option>
+			</select>
+		</nav>
 	</div>
 	<div class="gallery">
 		<?php
@@ -81,6 +91,9 @@ require 'gallery_functions.php';
 
 	/* disable like and comment buttons if user not logged in */
 	window.onload = function() {
+		var $_GET = <?php echo json_encode($_GET); ?>; /* encodes $_GET array to a JSON array */
+
+		document.getElementById("photo_amount").value = "?paginate="+ $_GET['paginate'];
 
 		if (!userlogged) {
 			let buttons = document.getElementsByClassName("like_comment");
