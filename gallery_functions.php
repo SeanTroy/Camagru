@@ -123,7 +123,7 @@ $sql = "SELECT `image_id`, `user_id`, `image_data`, `name`,
 		FROM_UNIXTIME(UNIX_TIMESTAMP(`time`), '%d.%m.%Y %H:%i:%s') AS 'time'
 		FROM `images`
 		LEFT JOIN `users` ON `images`.`user_id` = `users`.`id`
-		ORDER BY `image_id`
+		ORDER BY `image_id` DESC
 		LIMIT $offset, $images_per_page";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
