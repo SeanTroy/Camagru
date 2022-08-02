@@ -36,7 +36,6 @@ function checkImageNotification($image_id, $sender_id, $pdo)
 
 		$image_owner = $stmt->fetch(PDO::FETCH_ASSOC);
 		if ($image_owner['notify_mail'] == "YES" && $sender_id != $image_owner['id']) {
-			echo "IT SHOULD SEND A MESSAGE!";
 			return $image_owner['email'];
 		} else
 			return FALSE;
