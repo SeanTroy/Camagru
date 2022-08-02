@@ -16,16 +16,18 @@ require 'gallery_functions.php';
 	<?php
 	include 'elements/topbar.html';
 	?>
-	<div class="pagination">
-		<a href=<?= "?page=1" . "&paginate=" . $images_per_page; ?>>First</a>
-		<a href="<?php if ($page == 1) : echo '#';
-					else : echo "?page=" . ($page - 1) . "&paginate=" . $images_per_page;
-					endif ?>">&laquo;</a>
-		<text><?= $page . "/" . $total_pages; ?></text>
-		<a href="<?php if ($page >= $total_pages) : echo '#';
-					else : echo "?page=" . ($page + 1) . "&paginate=" . $images_per_page;
-					endif ?>">&raquo;</a>
-		<a href="?page=<?= $total_pages . "&paginate=" . $images_per_page; ?>">Last</a><br>
+	<div class="pagination_container">
+		<div class="pagination">
+			<a href=<?= "?page=1" . "&paginate=" . $images_per_page; ?>>First</a>
+			<a href="<?php if ($page == 1) : echo '#';
+						else : echo "?page=" . ($page - 1) . "&paginate=" . $images_per_page;
+						endif ?>">&laquo;</a>
+			<text><?= $page . "/" . $total_pages; ?></text>
+			<a href="<?php if ($page >= $total_pages) : echo '#';
+						else : echo "?page=" . ($page + 1) . "&paginate=" . $images_per_page;
+						endif ?>">&raquo;</a>
+			<a href="?page=<?= $total_pages . "&paginate=" . $images_per_page; ?>">Last</a><br>
+		</div>
 		<nav>
 			<text id="photo_select">Photos per page:</text>
 			<select id="photo_amount" onChange="window.location.href=this.value" name="categories" id="categories">
@@ -93,7 +95,7 @@ require 'gallery_functions.php';
 	window.onload = function() {
 		var $_GET = <?php echo json_encode($_GET); ?>; /* encodes $_GET array to a JSON array */
 
-		document.getElementById("photo_amount").value = "?paginate="+ $_GET['paginate'];
+		document.getElementById("photo_amount").value = "?paginate=" + $_GET['paginate'];
 
 		if (!userlogged) {
 			let buttons = document.getElementsByClassName("like_comment");
