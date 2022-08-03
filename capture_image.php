@@ -55,8 +55,10 @@ if (!isset($_SESSION['user_id'])) {
 		</div>
 	</div>
 	<div class="upload_area">
-		<text>Upload image file:</text>
-		<input type="file" id="image-upload" accept="image/jpeg, image/png, image/jpg">
+		<label for="image-upload" class="styled-image-upload">
+			<text>Upload Image File</text>
+			<input type="file" id="image-upload" accept="image/jpeg, image/png, image/jpg">
+		</label>
 	</div>
 	<form>
 		<input type="text" id="selected_sticker" value="empty.png,0,0,1,1" hidden>

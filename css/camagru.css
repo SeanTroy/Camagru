@@ -78,6 +78,8 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	margin-left: auto;
+	margin-right: auto;
 	gap: 1vw;
 }
 
@@ -115,9 +117,9 @@ body {
 	margin: 0.5vw;
 }
 
-@media (orientation: portrait) and (hover: none) {
+@media (hover: none) {
 	.previous_photos_bar {
-		width: 86vw;
+		width: 90vw;
 		height: 12vw;
 		min-width: 300px;
 		min-height: 100px;
@@ -130,7 +132,7 @@ body {
 	}
 
 	.photo_bar_content {
-		width: 86vw;
+		width: 90vw;
 		height: 12vw;
 		min-width: 300px;
 		min-height: 100px;
@@ -138,7 +140,7 @@ body {
 	}
 
 	#saved_photo {
-		width: 30vw;
+		width: 29vw;
 		margin: 0.5vw;
 	}
 }
@@ -156,14 +158,16 @@ body {
 }
 
 .capture_preview button {
+	font-size: 12px;
 	font-family: inherit;
+	padding: 3px;
 }
 
 #video, #canvas {
 	width: 36vw;
 	height: 27vw;
-	min-width: 320px;
-	min-height: 240px;
+	min-width: 328px;
+	min-height: 246px;
 	transform: scaleX(-1);
 }
 
@@ -186,7 +190,7 @@ body {
 	border: 0.05vw solid;
 	border-radius: 5px;
 	width: 99%;
-	min-width: 328px;
+	min-width: 336px;
 	height: 10vw;
 	overflow: hidden;
 	background-color: white;
@@ -205,21 +209,52 @@ body {
 	border: 0.05vw solid;
 	margin: 0.2vw;
 	height: 8vw;
-	background-color: rgb(230, 218, 218);
+	background-color: rgb(222, 222, 222);
 	border-radius: 3px;
+}
+
+@media (orientation: landscape) and (hover: none) {
+	.preview_area {
+		width: 99vw;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1vw;
+	}
+
+	.stickerbar {
+		border: 0.05vw solid;
+		border-radius: 5px;
+		width: 90vw;
+		min-width: 328px;
+		height: 10vw;
+		overflow: hidden;
+		background-color: white;
+		box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
+	}
 }
 
 .upload_area {
 	margin: 1vw;
-	width: 100vw;
+	margin-left: auto;
+	margin-right: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 0.5vw;
 }
 
 input[type=file] {
-	font-family: inherit;
+	display: none;
+}
+
+.styled-image-upload {
+    border: 1px solid black;
+	border-radius: 5px;
+	background-color: rgb(234, 234, 234);
+	font-size: 14px;
+    display: inline-block;
+    padding: 3px 6px;
+    cursor: pointer;
 }
 
 /* profile page */
