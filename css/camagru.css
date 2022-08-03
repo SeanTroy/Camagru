@@ -39,6 +39,7 @@ body {
 	border-color: transparent;
 	font-size: clamp(12px, 2vw, 36px);
 	font-family : inherit;
+	color: black;
 	cursor: pointer;
 }
 
@@ -119,29 +120,38 @@ body {
 
 @media (hover: none) {
 	.previous_photos_bar {
-		width: 90vw;
-		height: 12vw;
-		min-width: 300px;
+		width: 78vw;
+		height: 22vw;
+		min-width: 328px;
 		min-height: 100px;
-		border: 0.05vw solid;
-		border-radius: 5px;
-		overflow: hidden;
-		background-color: white;
-		position: relative;
-		box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
 	}
 
 	.photo_bar_content {
-		width: 90vw;
-		height: 12vw;
-		min-width: 300px;
+		width: 78vw;
+		height: 22vw;
+		min-width: 328px;
 		min-height: 100px;
-		overflow-x: scroll;
 	}
 
 	#saved_photo {
 		width: 29vw;
 		margin: 0.5vw;
+	}
+}
+
+@media (orientation: landscape) and (hover: none) {
+	.previous_photos_bar {
+		width: 93vw;
+		height: 12vw;
+	}
+
+	.photo_bar_content {
+		width: 93vw;
+		height: 12vw;
+	}
+
+	#saved_photo {
+		width: 16vw;
 	}
 }
 
@@ -166,8 +176,8 @@ body {
 #video, #canvas {
 	width: 36vw;
 	height: 27vw;
-	min-width: 328px;
-	min-height: 246px;
+	min-width: 320px;
+	min-height: 240px;
 	transform: scaleX(-1);
 }
 
@@ -190,7 +200,7 @@ body {
 	border: 0.05vw solid;
 	border-radius: 5px;
 	width: 99%;
-	min-width: 336px;
+	min-width: 328px;
 	height: 10vw;
 	overflow: hidden;
 	background-color: white;
@@ -216,21 +226,10 @@ body {
 @media (orientation: landscape) and (hover: none) {
 	.preview_area {
 		width: 99vw;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 1vw;
 	}
 
 	.stickerbar {
-		border: 0.05vw solid;
-		border-radius: 5px;
-		width: 90vw;
-		min-width: 328px;
-		height: 10vw;
-		overflow: hidden;
-		background-color: white;
-		box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
+		width: 93vw;
 	}
 }
 

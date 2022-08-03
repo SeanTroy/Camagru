@@ -108,6 +108,7 @@ figure figcaption {
 
 .gallery_form button {
 	font-family: inherit;
+	color: black;
 }
 
 .pagination_container {
@@ -147,4 +148,5 @@ figure figcaption {
 
 #photo_amount {
 	font-family: inherit;
+	color: black;
 }
