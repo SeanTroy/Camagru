@@ -112,7 +112,7 @@ if ($_POST['action'] == "delete" && isset($_SESSION['user_id']) && isset($_POST[
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute([$_POST['image_id']]);
 	}
-	if ($total_images % $images_per_page == 1)
+	if ($total_images % $images_per_page == 1 && $page === $total_pages && $page !== 1)
 		$page = $page - 1;
 	header("Location: gallery.php?page=" . $page . "&paginate=" . $images_per_page, true, 303); /* prevents page refresh from sending the data again */
 }
