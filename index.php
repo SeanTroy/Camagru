@@ -31,7 +31,13 @@ $index_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		?>
 			<img class="index_picture" id="<?= $key; ?>" src="<?= $image; ?>" style="opacity: 0">
 		<?php } ?>
-		<h3 style="opacity: 0" id="18">Welcome to CAMAGRU!</h3>
+		<div class="title_container" id="title" style="opacity: 0">
+			<img id="title-logo" src="icons/polaroid_logo.png">
+			<div class="title-text">
+				<h3>CAMAGRU</h3>
+				<text>THE PICTURE HIVE</text>
+			</div>
+		</div>
 	</div>
 	<?php include 'elements/footer.html'; ?>
 </body>
@@ -44,7 +50,7 @@ $index_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		if (count < 18)
 			document.getElementById(count).style.opacity = "0.3";
 		else
-		document.getElementById(count).style.opacity = "1";
+			document.getElementById('title').style.opacity = "1";
 		count += 1;
 		if (count < 19) {
 			setTimeout(displayImage, 50);

@@ -318,7 +318,7 @@ input[type=text], input[type=password], input[type=email]  {
 #footer_line {
 	border: 0;
 	width: 100vw;
-	height: 0.1vw;
+	height: 0.2vw;
 	background-color:black
 }
 
@@ -352,7 +352,7 @@ input[type=text], input[type=password], input[type=email]  {
 	flex-wrap: wrap;
 	justify-content: center;
 	font-size: max(1.2vw, 12px);
-	box-shadow: 1px 1px 5px black; /* drop shadow with 5px distance and 10px softness */
+	box-shadow: 0.3vw 0.3vw 0.5vw black; /* drop shadow with 0.5vw distance and 1vw softness */
 }
 
 .index_picture {
@@ -362,13 +362,43 @@ input[type=text], input[type=password], input[type=email]  {
 	transition: opacity 0.5s ease-in-out;
 }
 
-.index_container h3 {
+.title_container {
 	position: absolute;
-	top: 22vw;
-	font-size: 6vw;
-	color: white;
-	text-shadow: 5px 5px 5px black; /* drop shadow with 5px distance and 10px softness */
-	transition: opacity 0.5s ease-in-out;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 1vw;
+	top: 25vw;
+	background-color: white;
+	height: 12vw;
+	width: 40vw;
+	transition: opacity 1s ease-in-out;
+	box-shadow: 0.5vw 0.5vw 1vw black; /* drop shadow with 0.5vw distance and 1vw softness */
+}
+
+#title-logo {
+	width: 8vw;
+	height: 8vw;
+	margin: 1vw;
+}
+
+.title-text {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title-text h3 {
+	font-size: 4vw;
+	margin: 0 2vw 0 2vw;
+	color: black;
+	letter-spacing: 0.5vw;
+}
+
+.title-text text {
+	font-size: 1.2vw;
+	color: black;
+	letter-spacing: 0.5vw;
 }
 
 @media (orientation: portrait) and (hover: none) {
@@ -384,7 +414,7 @@ input[type=text], input[type=password], input[type=email]  {
 		flex-wrap: wrap;
 		justify-content: center;
 		font-size: max(1.2vw, 12px);
-		box-shadow: 3px 3px 5px black; /* drop shadow with 5px distance and 10px softness */
+		box-shadow: 0.2vw 0.2vw 0.5vw black; /* drop shadow with 0.5vw distance and 1vw softness */
 	}
 
 	.index_picture {
@@ -393,12 +423,42 @@ input[type=text], input[type=password], input[type=email]  {
 		margin-bottom: 0.2vw;
 	}
 
-	.index_container h3 {
+	.title_container {
 		position: absolute;
-		top: 63vw;
-		font-size: 9vw;
-		color: white;
-		text-shadow: 5px 5px 5px black; /* drop shadow with 5px distance and 10px softness */
-		transition: opacity 0.5s ease-in-out;
+		top: 68vw;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 1vw;
+		background-color: white;
+		height: 20vw;
+		width: 65vw;
+		transition: opacity 1s ease-in-out;
+		box-shadow: 0.5vw 0.5vw 1vw black; /* drop shadow with 0.5vw distance and 1vw softness */
+	}
+
+	#title-logo {
+		width: 13vw;
+		height: 13vw;
+		margin: 1vw;
+	}
+
+	.title-text {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.title-text h3 {
+		font-size: 7vw;
+		margin: 0 3vw 0 3vw;
+		color: black;
+		letter-spacing: 0.7vw;
+	}
+
+	.title-text text {
+		font-size: 2.5vw;
+		color: black;
+		letter-spacing: 0.7vw;
 	}
 }

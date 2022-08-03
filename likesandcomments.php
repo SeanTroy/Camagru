@@ -80,7 +80,7 @@ if (isset($_SESSION['user_id']) && isset($_POST['comment']) && isset($_POST['com
 		if ($email = checkImageNotification($_POST['comment_img_id'], $_SESSION['user_id'], $pdo)) {
 			$message = "Someone commented on your picture!" . "\n" . "\n" .
 				$_SESSION['loggued_on_user'] . " wrote the following comment in your picture:" . "\n" . "\n" .
-				$_POST['comment'] . "\n" . "\n" .
+				"'" . $_POST['comment'] . "'" . "\n" . "\n" .
 				"You can see all the comments in the Camagru gallery: http://localhost:8080/09_Camagru/gallery.php" . "\n";
 			$headers = 'From: camagru.admin@hive.fi' . "\r\n" .
 				'Reply-To: camagru.admin@hive.fi' . "\r\n" .
