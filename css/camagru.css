@@ -404,7 +404,7 @@ input[type=text], input[type=password], input[type=email]  {
 @media (orientation: portrait) and (hover: none) {
 	.index_container {
 		width: 96vw;
-		max-height: 150vw;
+		max-height: 350vw;
 		overflow: hidden;
 		border: 0.05vw solid;
 		border-radius: 5px;

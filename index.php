@@ -13,6 +13,15 @@ $stmt->execute();
 
 $index_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$row_count = $stmt->rowCount();
+if ($row_count < 18) {
+	$needed_rows = 18 - $row_count;
+	while ($needed_rows > 0) {
+		array_push($index_images, array('image_data'=>'icons/background_43.jpg'));
+		$needed_rows--;
+	}
+}
+
 ?>
 
 <html>
@@ -27,7 +36,10 @@ $index_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		<?php
 		foreach ($index_images as $key => $value) {
 			$base64 = $value['image_data'];
-			$image = "data:image/jpeg;base64," . $base64;
+			if ($base64 === 'icons/background_43.jpg')
+				$image = $base64;
+			else
+				$image = "data:image/jpeg;base64," . $base64;
 		?>
 			<img class="index_picture" id="<?= $key; ?>" src="<?= $image; ?>" style="opacity: 0">
 		<?php } ?>
