@@ -4,21 +4,20 @@ require_once 'config/newpdo.php';
 
 function getProfilePicture($pdo) {
 	try {$sql = "SELECT * FROM profile_pics
-	INNER JOIN images ON profile_pics.image_id = images.image_id
-	WHERE profile_pics.user_id = ?";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$_SESSION['user_id']]);
-$profile_pic = $stmt->fetch(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-print("Error!: " . $e->getMessage() . "<br/>");
+		INNER JOIN images ON profile_pics.image_id = images.image_id
+		WHERE profile_pics.user_id = ?";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute([$_SESSION['user_id']]);
+		$profile_pic = $stmt->fetch(PDO::FETCH_ASSOC);
+	} catch (PDOException $e) {
+		print("Error!: " . $e->getMessage() . "<br/>");
 }
 
 if ($profile_pic) {
-	$profile_pict_id = $profile_pic['image_id'];
 	echo "data:image/jpeg;base64," . $profile_pic['image_data'];
-} else {
-echo "icons/background_orig.jpg";
-}
+	} else {
+	echo "icons/background_orig.jpg";
+	}
 }
 
 ?>
@@ -29,13 +28,13 @@ echo "icons/background_orig.jpg";
 	<div class="topbaritems">
 		<a href="index.php"><img id="top-logo" src="icons/polaroid_logo.png"></a>
 		<?php if (isset($_SESSION['user_id'])) : ?>
-			<a href="profile.php"><button>USER PROFILE</button></a>
-			<a href="capture_image.php"><button>CAPTURE IMAGE</button></a>
-			<?php if (isset($_GET['paginate'])) : ?>
-				<a href="<?="gallery.php?page=1&paginate=" . $_GET['paginate']; ?>"><button>GALLERY</button></a>
-			<?php else : ?>
-				<a href="gallery.php?page=1&paginate=10"><button>GALLERY</button></a>
-			<?php endif ?>
+		<a href="profile.php"><button>USER PROFILE</button></a>
+		<a href="capture_image.php"><button>CAPTURE IMAGE</button></a>
+		<?php if (isset($_GET['paginate'])) : ?>
+		<a href="<?=" gallery.php?page=1&paginate=" . $_GET['paginate']; ?>"><button>GALLERY</button></a>
+		<?php else : ?>
+		<a href="gallery.php?page=1&paginate=10"><button>GALLERY</button></a>
+		<?php endif ?>
 		<div class="topuser_info">
 			<div class="topuser_logout">
 				User:
@@ -47,12 +46,12 @@ echo "icons/background_orig.jpg";
 			</div>
 		</div>
 		<?php else : ?>
-			<a href="login.php"><button>LOGIN</button></a>
-			<?php if (isset($_GET['paginate'])) : ?>
-				<a href="<?="gallery.php?page=1&paginate=" . $_GET['paginate']; ?>"><button>GALLERY</button></a>
-			<?php else : ?>
-				<a href="gallery.php?page=1&paginate=10"><button>GALLERY</button></a>
-			<?php endif ?>
+		<a href="login.php"><button>LOGIN</button></a>
+		<?php if (isset($_GET['paginate'])) : ?>
+		<a href="<?=" gallery.php?page=1&paginate=" . $_GET['paginate']; ?>"><button>GALLERY</button></a>
+		<?php else : ?>
+		<a href="gallery.php?page=1&paginate=10"><button>GALLERY</button></a>
+		<?php endif ?>
 		<?php endif ?>
 	</div>
 </div>

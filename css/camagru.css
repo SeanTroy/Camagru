@@ -291,7 +291,6 @@ input[type=file] {
 	height: 10vw;
 	min-height: 150px;
 	width: auto;
-	/* margin-left: -15%; */
 }
 
 .profile_container button, input[type=submit] {

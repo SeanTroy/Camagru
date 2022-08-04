@@ -44,8 +44,8 @@ function checkUserLikes($image_id, $pdo)
 {
 	try {
 		$sql = "SELECT * FROM `likes`
-	LEFT JOIN `users` ON `likes`.`user_id` = `users`.`id`
-	WHERE `likes`.`image_id` = ? AND `likes`.`user_id` = ?";
+		LEFT JOIN `users` ON `likes`.`user_id` = `users`.`id`
+		WHERE `likes`.`image_id` = ? AND `likes`.`user_id` = ?";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute([$image_id, $_SESSION['user_id']]);
 		$liked = $stmt->fetch();

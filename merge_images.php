@@ -37,6 +37,4 @@ if (isset($_SESSION['user_id']) && isset($_POST['new_image']) && isset($_POST['s
 	$stmt->execute([$_SESSION['user_id'], $image]);
 
 	echo "data:image/jpeg;base64," . $image;
-} else {
-	echo "ERROR!";
 }

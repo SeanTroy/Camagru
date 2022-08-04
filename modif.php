@@ -56,15 +56,13 @@ function sendChangeEmail($email, $code)
 if (isset($_GET['mailchange']) && isset($_GET['code'])) {
 
 	try {$sql = "SELECT * FROM `email_change` WHERE `user_id` = ? AND `change_code` = ?";
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute([$_SESSION['user_id'], $_GET['code']]);
-
-	// echo $_SESSION['user_id'];
-	$changedata = $stmt->fetch(PDO::FETCH_ASSOC);
-
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute([$_SESSION['user_id'], $_GET['code']]);
+		$changedata = $stmt->fetch(PDO::FETCH_ASSOC);
 	} catch (PDOException $e) {
 		print("Error!: " . $e->getMessage() . "<br/>");
 	}
+
 	if ($changedata) {
 		$sql = "UPDATE `users` SET `email` = ? WHERE `id` = ?";
 		$stmt = $pdo->prepare($sql);

@@ -13,6 +13,8 @@ $stmt->execute();
 
 $index_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+/* replace the missing images with default photo */
+
 $row_count = $stmt->rowCount();
 if ($row_count < 18) {
 	$needed_rows = 18 - $row_count;

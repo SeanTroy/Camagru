@@ -61,7 +61,8 @@ require 'gallery_functions.php';
 							<p id="likes<?= $value['image_id']; ?>"><?= getLikesAmount($value['image_id'], $pdo) ?></p>
 						</div>
 						<?php if ($value['user_id'] == $_SESSION['user_id']) { ?>
-							<form class="trash_and_profile" id="trash<?= $value['image_id']; ?>" action="gallery.php?page=<?= $page ?>" method="post">
+							<form class="trash_and_profile" id="trash<?= $value['image_id']; ?>"
+							action="gallery.php?page=<?= $page ?>&paginate=<?= $images_per_page ?>" method="post">
 								<input type="text" name="image_id" value="<?= $value['image_id']; ?>" hidden>
 								<input type="text" name="action" value="delete" hidden>
 								<?php if ($profile_pict_id != $value['image_id']) : ?>
@@ -73,7 +74,7 @@ require 'gallery_functions.php';
 							</form>
 						<?php } ?>
 					</div>
-					<figcaption id="caption<?= $value['image_id']; ?>">
+					<figcaption id="comments<?= $value['image_id']; ?>">
 						<?= showComments($value['image_id'], $pdo) ?>
 					</figcaption>
 				</figure>
@@ -106,7 +107,7 @@ require 'gallery_functions.php';
 		}
 	}
 
-	/* delete photo if confirmed */
+	/* delete photo if confirmed, by submitting the POST form */
 	function deletePhoto(image_id) {
 		if (confirm("Are you sure you want to delete this picture?")) {
 			document.getElementById("trash" + image_id).submit();
@@ -162,11 +163,6 @@ require 'gallery_functions.php';
 		xml.open('post', 'profile_pics.php', true);
 		xml.onload = function() {
 			profile_picture.src = this.response;
-			// if (this.response != "icons/background.jpg") {
-			// 	profile_picture.style = "margin-left: -15%;";
-			// } else {
-			// 	profile_picture.style = "margin-left: 0%;";
-			// }
 		}
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xml.send('setpic=' + image_id);
@@ -176,13 +172,13 @@ require 'gallery_functions.php';
 
 	function addComment(image_id) {
 		function sendData(form, image_id) {
-			let caption = document.getElementById('caption' + image_id);
+			let comments = document.getElementById('comments' + image_id);
 			let formData = new FormData(form);
 
 			let xml = new XMLHttpRequest();
 			xml.open('post', 'likesandcomments.php', true);
 			xml.onload = function() {
-				caption.innerHTML = this.response;
+				comments.innerHTML = this.response;
 			}
 			xml.send(formData);
 		}
@@ -199,12 +195,12 @@ require 'gallery_functions.php';
 	function deleteComment(comment_id, image_id) {
 		if (confirm("Are you sure you want to delete this comment?")) {
 
-			let caption = document.getElementById('caption' + image_id);
+			let comments = document.getElementById('comments' + image_id);
 
 			let xml = new XMLHttpRequest();
 			xml.open('post', 'likesandcomments.php', true);
 			xml.onload = function() {
-				caption.innerHTML = this.response;
+				comments.innerHTML = this.response;
 			}
 			xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xml.send('action=del_comment&comment_id=' + comment_id + '&image_id=' + image_id);

@@ -89,14 +89,12 @@ if (!isset($_SESSION['user_id'])) {
 		}
 	}
 
-	/* draw video frame to canvas */
+	/* draw video frame to canvas and enable the save photo button */
 
 	click_button.addEventListener('click', function() {
 		canvas.style = "transform: scaleX(-1);"
 		uploaded = "N";
 		canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-
-		/* enable the save photo button */
 		document.getElementById("save-photo").disabled = false;
 	});
 
@@ -165,16 +163,18 @@ if (!isset($_SESSION['user_id'])) {
 		/* draw the new sticker */
 		preview1.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
 		preview2.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
-
+		/* set values to hidden element */
 		document.getElementById("selected_sticker").value = sticker.id+','+h_offset+','+v_offset+','+width+','+height;
 	}
+
+	/* move the sticker by clicking on either preview window */
 
 	function moveSticker(element, canvas, event) {
 		let sticker_values = document.getElementById("selected_sticker").value.split(',');
 
-    	const rect = element.getBoundingClientRect();
-    	const x = (event.clientX - rect.left) / (rect.right - rect.left) * 640 - sticker_values[3] / 2;
-    	const y = (event.clientY - rect.top) / (rect.bottom - rect.top) * 480 - sticker_values[4] / 2;
+		const rect = element.getBoundingClientRect();
+		const x = (event.clientX - rect.left) / (rect.right - rect.left) * 640 - sticker_values[3] / 2;
+		const y = (event.clientY - rect.top) / (rect.bottom - rect.top) * 480 - sticker_values[4] / 2;
 
 		let sticker = document.getElementById(sticker_values[0]);
 		drawSticker(sticker, x, y, sticker_values[3], sticker_values[4]);
@@ -191,13 +191,13 @@ if (!isset($_SESSION['user_id'])) {
 	/* add photos to saved photos bar */
 
 	function appendPhotoBar(savedImage) {
-	let photoBar = document.getElementById('photo_bar_content');
+		let photoBar = document.getElementById('photo_bar_content');
 
-	let latestPhoto = document.createElement('img');
-	latestPhoto.id = 'saved_photo';
-	latestPhoto.src = savedImage;
+		let latestPhoto = document.createElement('img');
+		latestPhoto.id = 'saved_photo';
+		latestPhoto.src = savedImage;
 
-	photoBar.appendChild(latestPhoto);
+		photoBar.appendChild(latestPhoto);
 	}
 
 </script>
