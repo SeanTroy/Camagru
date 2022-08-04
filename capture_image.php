@@ -61,10 +61,6 @@ if (!isset($_SESSION['user_id'])) {
 			<input type="file" id="image-upload" accept="image/jpeg, image/png, image/jpg">
 		</label>
 	</div>
-	<form>
-		<input type="text" id="selected_sticker" value="" hidden>
-		<input type="text" id="locked_stickers" value="" hidden>
-	</form>
 	<?php include 'elements/footer.html'; ?>
 </body>
 
