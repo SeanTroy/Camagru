@@ -77,6 +77,8 @@ if (!isset($_SESSION['user_id'])) {
 	let preview2 = document.getElementById("sticker_preview2");
 	let locked_preview = document.getElementById("locked_preview");
 	var uploaded = "N";
+	var selected_sticker = "";
+	var locked_stickers = "";
 
 	/* start webcam when entering the page and output to video element, considering orientation */
 
@@ -98,15 +100,14 @@ if (!isset($_SESSION['user_id'])) {
 		canvas.style = "transform: scaleX(-1);"
 		uploaded = "N";
 		canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-		document.getElementById("save-photo").disabled = false;
+		save_button.disabled = false;
 	});
 
 	/* send canvas image to server side with selected sticker */
 
 	save_button.addEventListener('click', function() {
 		let image_data_url = canvas.toDataURL('image/jpeg');
-		let stickers = document.getElementById("locked_stickers").value;
-		stickers += document.getElementById("selected_sticker").value;
+		locked_stickers += selected_sticker;
 
 		let xml = new XMLHttpRequest();
 		xml.open('post', 'merge_images.php', true);
@@ -115,7 +116,7 @@ if (!isset($_SESSION['user_id'])) {
 			appendPhotoBar(this.response);
 		}
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xml.send('new_image='+image_data_url+'&sticker='+stickers+'&uploaded='+uploaded);
+		xml.send('new_image='+image_data_url+'&sticker='+locked_stickers+'&uploaded='+uploaded);
 	});
 
 	/* upload and draw image to canvas, considering file size */
@@ -130,7 +131,7 @@ if (!isset($_SESSION['user_id'])) {
 		if (this.value !== "") {
 			canvas.style = "transform: scaleX(1);"
 			uploaded = "Y";
-			document.getElementById("save-photo").disabled = false;
+			save_button.disabled = false;
 
 			var img = new Image();
 			img.src = URL.createObjectURL(this.files[0]);
@@ -157,18 +158,18 @@ if (!isset($_SESSION['user_id'])) {
 			/* save the previous stickers to locked canvas */
 			locked_preview.getContext('2d').drawImage(preview1, 0, 0, canvas.width, canvas.height);
 			locked_preview.getContext('2d').drawImage(preview1, 0, 0, canvas.width, canvas.height);
-			document.getElementById("locked_stickers").value += document.getElementById("selected_sticker").value;
+			locked_stickers += selected_sticker;
 		}
 		if (sticker.id == "empty.png") {
 			/* disable the take photo button */
-			document.getElementById("take-photo").disabled = true;
-			document.getElementById("take-photo").innerHTML = "Select Sticker";
+			click_button.disabled = true;
+			click_button.innerHTML = "Select Sticker";
 			/* clear former stickers */
 			locked_preview.getContext('2d').clearRect(0, 0, preview1.width, preview1.height);
-			document.getElementById("locked_stickers").value = "";
+			locked_stickers = "";
 		} else {
-			document.getElementById("take-photo").disabled = false;
-			document.getElementById("take-photo").innerHTML = "Take Photo";
+			click_button.disabled = false;
+			click_button.innerHTML = "Take Photo";
 		}
 		/* clear previous sticker from preview screens */
 		preview1.getContext('2d').clearRect(0, 0, preview1.width, preview1.height);
@@ -180,13 +181,13 @@ if (!isset($_SESSION['user_id'])) {
 		preview1.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
 		preview2.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
 		/* set values to hidden element */
-		document.getElementById("selected_sticker").value = sticker.id+','+h_offset+','+v_offset+','+width+','+height+',';
+		selected_sticker = sticker.id+','+h_offset+','+v_offset+','+width+','+height+',';
 	}
 
 	/* move the sticker by clicking on either preview window */
 
 	function moveSticker(element, canvas, event) {
-		let sticker_values = document.getElementById("selected_sticker").value.split(',');
+		let sticker_values = selected_sticker.split(',');
 
 		const rect = element.getBoundingClientRect();
 		const x = (event.clientX - rect.left) / (rect.right - rect.left) * 640 - sticker_values[3] / 2;
