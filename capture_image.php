@@ -32,19 +32,20 @@ if (!isset($_SESSION['user_id'])) {
 				<figcaption id="title_text">Preview</figcaption>
 				<button id="save-photo" disabled>Save photo</button>
 			</div>
+			<canvas id="locked_preview" width="640" height="480" hidden></canvas>
 			<div class="stickerbar">
 				<div class="stickerbar_content">
-					<img class="sticker" id="empty.png" src="stickers/empty.png" onclick="drawSticker(this,0,0,1,1)">
-					<img class="sticker" id="42.png" src="stickers/42.png" onclick="drawSticker(this,30,30,180,110)">
-					<img class="sticker" id="fireframe.png" src="stickers/fireframe.png" onclick="drawSticker(this, 0, 0, 640, 480)">
-					<img class="sticker" id="crown.png" src="stickers/crown.png" onclick="drawSticker(this, 200, 0, 240, 160)">
-					<img class="sticker" id="blackhair.png" src="stickers/blackhair.png" onclick="drawSticker(this, 180, 0, 320, 250)">
-					<img class="sticker" id="mario.png" src="stickers/mario.png" onclick="drawSticker(this, 30, 30, 200, 276)">
-					<img class="sticker" id="8bitpipe.png" src="stickers/8bitpipe.png" onclick="drawSticker(this, 120, 150, 400, 400)">
-					<img class="sticker" id="pinkglasses.png" src="stickers/pinkglasses.png" onclick="drawSticker(this, 180, 0, 300, 215)">
-					<img class="sticker" id="moustache.png" src="stickers/moustache.png" onclick="drawSticker(this, 180, 300, 240, 100)">
-					<img class="sticker" id="bloodyscar.png" src="stickers/bloodyscar.png" onclick="drawSticker(this, 200, 100, 180, 60)">
-					<img class="sticker" id="Skullandbones.png" src="stickers/Skullandbones.png" onclick="drawSticker(this, 90, 0, 480, 480)">
+					<img class="sticker" id="empty.png" src="stickers/empty.png" onclick="drawSticker(this,0,0,1,1,'new')">
+					<img class="sticker" id="42.png" src="stickers/42.png" onclick="drawSticker(this,30,30,180,110,'new')">
+					<img class="sticker" id="fireframe.png" src="stickers/fireframe.png" onclick="drawSticker(this, 0, 0, 640, 480,'new')">
+					<img class="sticker" id="crown.png" src="stickers/crown.png" onclick="drawSticker(this, 200, 0, 240, 160,'new')">
+					<img class="sticker" id="blackhair.png" src="stickers/blackhair.png" onclick="drawSticker(this, 180, 0, 320, 250,'new')">
+					<img class="sticker" id="mario.png" src="stickers/mario.png" onclick="drawSticker(this, 30, 30, 200, 276,'new')">
+					<img class="sticker" id="8bitpipe.png" src="stickers/8bitpipe.png" onclick="drawSticker(this, 120, 150, 400, 400,'new')">
+					<img class="sticker" id="pinkglasses.png" src="stickers/pinkglasses.png" onclick="drawSticker(this, 180, 0, 300, 215,'new')">
+					<img class="sticker" id="moustache.png" src="stickers/moustache.png" onclick="drawSticker(this, 180, 300, 240, 100,'new')">
+					<img class="sticker" id="bloodyscar.png" src="stickers/bloodyscar.png" onclick="drawSticker(this, 200, 100, 180, 60,'new')">
+					<img class="sticker" id="Skullandbones.png" src="stickers/Skullandbones.png" onclick="drawSticker(this, 90, 0, 480, 480,'new')">
 				</div>
 			</div>
 		</div>
@@ -61,7 +62,8 @@ if (!isset($_SESSION['user_id'])) {
 		</label>
 	</div>
 	<form>
-		<input type="text" id="selected_sticker" value="empty.png,0,0,1,1" hidden>
+		<input type="text" id="selected_sticker" value="" hidden>
+		<input type="text" id="locked_stickers" value="" hidden>
 	</form>
 	<?php include 'elements/footer.html'; ?>
 </body>
@@ -71,8 +73,9 @@ if (!isset($_SESSION['user_id'])) {
 	let click_button = document.getElementById("take-photo");
 	let canvas = document.getElementById("canvas");
 	let save_button = document.getElementById("save-photo");
-	let preview2 = document.getElementById("sticker_preview2");
 	let preview1 = document.getElementById("sticker_preview1");
+	let preview2 = document.getElementById("sticker_preview2");
+	let locked_preview = document.getElementById("locked_preview");
 	var uploaded = "N";
 
 	/* start webcam when entering the page and output to video element, considering orientation */
@@ -102,7 +105,8 @@ if (!isset($_SESSION['user_id'])) {
 
 	save_button.addEventListener('click', function() {
 		let image_data_url = canvas.toDataURL('image/jpeg');
-		let sticker = document.getElementById("selected_sticker").value;
+		let stickers = document.getElementById("locked_stickers").value;
+		stickers += document.getElementById("selected_sticker").value;
 
 		let xml = new XMLHttpRequest();
 		xml.open('post', 'merge_images.php', true);
@@ -111,7 +115,7 @@ if (!isset($_SESSION['user_id'])) {
 			appendPhotoBar(this.response);
 		}
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xml.send('new_image='+image_data_url+'&sticker='+sticker+'&uploaded='+uploaded);
+		xml.send('new_image='+image_data_url+'&sticker='+stickers+'&uploaded='+uploaded);
 	});
 
 	/* upload and draw image to canvas, considering file size */
@@ -148,11 +152,20 @@ if (!isset($_SESSION['user_id'])) {
 
 	/* select sticker, preview it and save its values */
 
-	function drawSticker(sticker, h_offset, v_offset, width, height) {
-		/* enable the take photo button */
+	function drawSticker(sticker, h_offset, v_offset, width, height, status) {
+		if (status === 'new') {
+			/* save the previous stickers to locked canvas */
+			locked_preview.getContext('2d').drawImage(preview1, 0, 0, canvas.width, canvas.height);
+			locked_preview.getContext('2d').drawImage(preview1, 0, 0, canvas.width, canvas.height);
+			document.getElementById("locked_stickers").value += document.getElementById("selected_sticker").value;
+		}
 		if (sticker.id == "empty.png") {
+			/* disable the take photo button */
 			document.getElementById("take-photo").disabled = true;
 			document.getElementById("take-photo").innerHTML = "Select Sticker";
+			/* clear former stickers */
+			locked_preview.getContext('2d').clearRect(0, 0, preview1.width, preview1.height);
+			document.getElementById("locked_stickers").value = "";
 		} else {
 			document.getElementById("take-photo").disabled = false;
 			document.getElementById("take-photo").innerHTML = "Take Photo";
@@ -160,11 +173,14 @@ if (!isset($_SESSION['user_id'])) {
 		/* clear previous sticker from preview screens */
 		preview1.getContext('2d').clearRect(0, 0, preview1.width, preview1.height);
 		preview2.getContext('2d').clearRect(0, 0, preview2.width, preview2.height);
+		/* draw the previously selected stickers */
+		preview1.getContext('2d').drawImage(locked_preview, 0, 0, canvas.width, canvas.height);
+		preview2.getContext('2d').drawImage(locked_preview, 0, 0, canvas.width, canvas.height);
 		/* draw the new sticker */
 		preview1.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
 		preview2.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
 		/* set values to hidden element */
-		document.getElementById("selected_sticker").value = sticker.id+','+h_offset+','+v_offset+','+width+','+height;
+		document.getElementById("selected_sticker").value = sticker.id+','+h_offset+','+v_offset+','+width+','+height+',';
 	}
 
 	/* move the sticker by clicking on either preview window */
@@ -177,7 +193,7 @@ if (!isset($_SESSION['user_id'])) {
 		const y = (event.clientY - rect.top) / (rect.bottom - rect.top) * 480 - sticker_values[4] / 2;
 
 		let sticker = document.getElementById(sticker_values[0]);
-		drawSticker(sticker, x, y, sticker_values[3], sticker_values[4]);
+		drawSticker(sticker, x, y, sticker_values[3], sticker_values[4],'moved');
 	}
 
 	preview1.addEventListener('mousedown', function(e) {

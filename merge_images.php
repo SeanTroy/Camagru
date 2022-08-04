@@ -10,21 +10,26 @@ if (isset($_SESSION['user_id']) && isset($_POST['new_image']) && isset($_POST['s
 	$image_url = str_replace(' ', '+', $image_url);
 	$image = base64_decode($image_url);
 
-	$sticker_values = explode(',', $_POST['sticker']);
-	$sticker = file_get_contents('stickers/' . $sticker_values[0]);
-	$h_offset = $sticker_values[1];
-	$v_offset = $sticker_values[2];
-	$width = $sticker_values[3];
-	$height = $sticker_values[4];
-
 	$image = imagecreatefromstring($image);
 	if ($_POST['uploaded'] == "N")
 		imageflip($image, IMG_FLIP_HORIZONTAL);
-	$sticker = imagecreatefromstring($sticker);
-	$sticker = imagescale($sticker, $width, $height);
 
-	// Copy and merge
-	imagecopy($image, $sticker, $h_offset, $v_offset, 0, 0, $width, $height);
+	$sticker_values = explode(',', $_POST['sticker']);
+	$i = 0;
+	while ($sticker_values[$i] !== "") {
+		$sticker = file_get_contents('stickers/' . $sticker_values[$i]);
+		$h_offset = $sticker_values[$i+1];
+		$v_offset = $sticker_values[$i+2];
+		$width = $sticker_values[$i+3];
+		$height = $sticker_values[$i+4];
+
+		$sticker = imagecreatefromstring($sticker);
+		$sticker = imagescale($sticker, $width, $height);
+
+		// Copy and merge
+		imagecopy($image, $sticker, $h_offset, $v_offset, 0, 0, $width, $height);
+		$i += 5;
+	}
 
 	ob_start();
 	imagejpeg($image);
