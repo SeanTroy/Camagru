@@ -103,6 +103,7 @@ require 'gallery_functions.php';
 			for (let i = 0; i < buttons.length; i++) {
 				buttons[i].disabled = true;
 				buttons[i].innerHTML = "Login to like or comment";
+				buttons[i].style = "color: grey";
 			}
 		}
 	}

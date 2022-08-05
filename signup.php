@@ -59,11 +59,11 @@ if ($_POST["submit"] == "OK") {
 	} else if (!(checkNewEmail($_POST["email"], $pdo))) {
 		$warning_message = "An account with this e-mail address already exists.";
 	} else if (!preg_match('/(?=^.{8,30}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?=.*[A-Z])(?=.*[a-z]).*$/', $_POST["passwd"])) {
-		$msg1 = "PLEASE ENTER A PASSWORD WITH:" . PHP_EOL;
-		$msg2 = "- a length between 8 and 30 characters" . PHP_EOL;
-		$msg3 = "- at least one lowercase character (a-z)" . PHP_EOL;
-		$msg4 = "- at least one uppercase character (A-Z)" . PHP_EOL;
-		$msg5 = "- at least one numeric character (0-9)" . PHP_EOL;
+		$msg1 = "PLEASE ENTER A PASSWORD WITH: <br>";
+		$msg2 = "- a length between 8 and 30 characters <br>";
+		$msg3 = "- at least one lowercase character (a-z) <br>";
+		$msg4 = "- at least one uppercase character (A-Z) <br>";
+		$msg5 = "- at least one numeric character (0-9) <br>";
 		$msg6 = "- at least one special character (!@#$%^&*)";
 		$warning_message = $msg1 . $msg2 . $msg3 . $msg4 . $msg5 . $msg6;
 	} else {
