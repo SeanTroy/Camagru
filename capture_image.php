@@ -81,11 +81,11 @@ if (!isset($_SESSION['user_id'])) {
 	window.onload = async function(){
 		if (window.matchMedia("(orientation: portrait)").matches && window.matchMedia("(hover: none)").matches) {
 			let videoMode = {aspectRatio: 3/4, facingMode: 'user'};
-			let stream = await navigator.mediaDevices.getUserMedia({ video: videoMode, audio: false });
+			let stream = await navigator.mediaDevices.getUserMedia({ video: videoMode, audio: false }).catch(function(err) { alert("You have to allow the browser to access the webcam!"); });
 			video.srcObject = stream;
 		} else {
 			let videoMode = {aspectRatio: 4/3, facingMode: 'user'};
-			let stream = await navigator.mediaDevices.getUserMedia({ video: videoMode, audio: false });
+			let stream = await navigator.mediaDevices.getUserMedia({ video: videoMode, audio: false }).catch(function(err) { alert("You have to allow the browser to access the webcam!"); });
 			video.srcObject = stream;
 		}
 	}
@@ -158,7 +158,7 @@ if (!isset($_SESSION['user_id'])) {
 				locked_stickers += selected_sticker;
 			}
 		}
-		if (sticker.id == "empty.png") {
+		if (sticker.id == "empty.png" || !video.srcObject) {
 			/* disable the take photo button */
 			click_button.disabled = true;
 			click_button.innerHTML = "Select Sticker";
