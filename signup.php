@@ -1,6 +1,9 @@
 <?php
 require_once 'config/newpdo.php';
 
+$warning_message = "";
+$success_message = "";
+
 function confirmPassword($passwd, $confirm_passwd)
 {
 	if ($passwd === $confirm_passwd)
@@ -35,7 +38,7 @@ function sendConfirmationEmail($email, $user, $code)
 {
 	$message = "Hello! Welcome to Camagru!" . "\n" . "\n" .
 		"Please click on the following link to activate your account:" . "\n" . "\n" .
-		"http://localhost:8080/09_Camagru/login.php?user=$user&code=$code" . "\n";
+		"https://camagru.pekkalehtikangas.fi/login.php?user=$user&code=$code" . "\n";
 	$headers = 'From: camagru.admin@hive.fi' . "\r\n" .
 		'Reply-To: camagru.admin@hive.fi' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
@@ -44,7 +47,7 @@ function sendConfirmationEmail($email, $user, $code)
 
 $warning_message = "";
 
-if ($_POST["submit"] == "OK") {
+if (isset($_POST["submit"]) && $_POST["submit"] == "OK") {
 
 	if (strlen($_POST["login"]) > 25) {
 		$warning_message = "Username is too long. Maximum length is 25 characters.";
@@ -97,9 +100,9 @@ if ($_POST["submit"] == "OK") {
 	<div class="profile_container">
 		<h3>CREATE NEW ACCOUNT HERE</h3>
 		<form name="create" action="signup.php" method="post"  class="profile_form">
-			Username: <input type="text" name="login" value="<?=$_POST['login']?>" autocomplete="off" required />
+			Username: <input type="text" name="login" value="<?php if (isset($_POST['login'])){echo $_POST['login'];} ?>" autocomplete="off" required />
 			<br />
-			E-mail: <input type="email" name="email" value="<?=$_POST['email']?>" autocomplete="off" required />
+			E-mail: <input type="email" name="email" value="<?php if (isset($_POST['email'])){echo $_POST['email'];} ?>" autocomplete="off" required />
 			<br />
 			Password: <input type="password" name="passwd" value="" required />
 			<br />

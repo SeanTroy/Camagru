@@ -41,7 +41,7 @@ function userEmail($user_id, $pdo)
 $notify_status = userNotificationStatus($_SESSION["user_id"], $pdo);
 $user_email = userEmail($_SESSION["user_id"], $pdo);
 
-if ($_POST['submit'] == "Change notifications") {
+if (isset($_POST['submit']) && $_POST['submit'] == "Change notifications") {
 	try {
 		if ($notify_status === "YES") {
 			$sql = "UPDATE `users` SET `notify_mail` = 'NO' WHERE `id` = ?";

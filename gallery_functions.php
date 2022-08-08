@@ -10,8 +10,13 @@ if (isset($_GET['page'])) {
 
 if (isset($_GET['paginate'])) {
 	$images_per_page = $_GET['paginate'];
+	$_SESSION['paginate'] = $_GET['paginate'];
+} else if (isset($_SESSION['paginate'])) {
+	$images_per_page = $_SESSION['paginate'];
+	$_GET['paginate'] = $_SESSION['paginate'];
 } else {
 	$images_per_page = 10;
+	$_GET['paginate'] = 10;
 }
 
 $offset = ($page - 1) * $images_per_page;
@@ -42,20 +47,23 @@ if (isset($_SESSION['user_id'])) {
 
 function checkUserLikes($image_id, $pdo)
 {
-	try {
-		$sql = "SELECT * FROM `likes`
+	if (isset($_SESSION['user_id'])) {
+		try {
+			$sql = "SELECT * FROM `likes`
 		LEFT JOIN `users` ON `likes`.`user_id` = `users`.`id`
 		WHERE `likes`.`image_id` = ? AND `likes`.`user_id` = ?";
-		$stmt = $pdo->prepare($sql);
-		$stmt->execute([$image_id, $_SESSION['user_id']]);
-		$liked = $stmt->fetch();
-		if ($liked)
-			return TRUE;
-		else
-			return FALSE;
-	} catch (PDOException $e) {
-		print("Error!: " . $e->getMessage() . "<br/>");
-	}
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute([$image_id, $_SESSION['user_id']]);
+			$liked = $stmt->fetch();
+			if ($liked)
+				return TRUE;
+			else
+				return FALSE;
+		} catch (PDOException $e) {
+			print("Error!: " . $e->getMessage() . "<br/>");
+		}
+	} else
+	return FALSE;
 }
 
 /* function to get the amount of likes for an image */
@@ -90,7 +98,7 @@ function showComments($image_id, $pdo)
 	foreach ($comments as $key => $text) {
 		echo "<div class=comment>";
 		echo $text['name'] . ": " . $text['comment'] . " ";
-		if (($text['name'] === $_SESSION['loggued_on_user'] && $text['comment'] != "[user deleted this comment]")) {
+		if (isset($_SESSION['loggued_on_user']) && ($text['name'] === $_SESSION['loggued_on_user'] && $text['comment'] != "[user deleted this comment]")) {
 			echo '<img class="del_comment" alt="Delete" title="Delete comment" src="icons/delete.png" onclick="deleteComment(' . $text['comment_id'] . ', ' . $image_id . ')">';
 		}
 		echo "<br></div>";
@@ -99,7 +107,7 @@ function showComments($image_id, $pdo)
 
 /* deletion of images, making sure that user owns the picture */
 
-if ($_POST['action'] == "delete" && isset($_SESSION['user_id']) && isset($_POST['image_id'])) {
+if (isset($_POST['action']) && $_POST['action'] == "delete" && isset($_SESSION['user_id']) && isset($_POST['image_id'])) {
 	$sql = "SELECT `user_id` FROM `images` WHERE `image_id` = ?";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([$_POST['image_id']]);

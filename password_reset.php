@@ -5,14 +5,15 @@ require_once 'config/newpdo.php';
 
 $warning_message = "";
 $success_message = "";
+$tempuser = "";
 
 function sendPasswordEmail($email, $user, $code)
 {
 	$message = "Hello! You requested to reset a forgotten password!" . "\n" . "\n" .
 		"Please click on the following link to create a new password:" . "\n" . "\n" .
-		"http://localhost:8080/09_Camagru/password_reset.php?user=$user&code=$code" . "\n";
-	$headers = 'From: camagru.plehtika@hive.fi' . "\r\n" .
-		'Reply-To: camagru.plehtika@hive.fi' . "\r\n" .
+		"https://camagru.pekkalehtikangas.fi/password_reset.php?user=$user&code=$code" . "\n";
+	$headers = 'From: camagru.admin@hive.fi' . "\r\n" .
+		'Reply-To: camagru.admin@hive.fi' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
 	mail($email, 'Password Reset Email', $message, $headers);
 }
@@ -30,7 +31,7 @@ if (isset($_GET['user']) && isset($_GET['code'])) {
 	}
 }
 
-if ($_POST['submit'] == "OK" && isset($_POST["login"])) {
+if (isset($_POST['submit']) && $_POST['submit'] == "OK" && isset($_POST["login"])) {
 
 	if ($_POST['resetpw'] === $_POST['confirm_resetpw']) {
 
@@ -46,7 +47,7 @@ if ($_POST['submit'] == "OK" && isset($_POST["login"])) {
 	}
 }
 
-if ($_POST['submit'] == "Send e-mail") {
+if (isset($_POST['submit']) && $_POST['submit'] == "Send e-mail") {
 
 	$code = rand(100000, 999999);
 
@@ -100,7 +101,7 @@ if ($_POST['submit'] == "Send e-mail") {
 	<?php
 	include 'elements/topbar.html';
 	?>
-	<?php if ($tempuser) : ?>
+	<?php if ($tempuser !== "") : ?>
 		<div class="profile_container">
 			<h3>PLEASE ENTER A NEW PASSWORD</h3>
 			<form name="reset" action="password_reset.php" method="post" class="profile_form">

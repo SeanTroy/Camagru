@@ -73,7 +73,7 @@ if (!isset($_SESSION['user_id'])) {
 	let preview2 = document.getElementById("sticker_preview2");
 	let locked_preview = document.getElementById("locked_preview");
 	var uploaded = "N";
-	var selected_sticker = "";
+	var selected_sticker = "empty.png,0,0,1,1,";
 	var locked_stickers = "";
 
 	/* start webcam when entering the page and output to video element, considering orientation */
@@ -154,7 +154,9 @@ if (!isset($_SESSION['user_id'])) {
 			/* save the previous stickers to locked canvas */
 			locked_preview.getContext('2d').drawImage(preview1, 0, 0, canvas.width, canvas.height);
 			locked_preview.getContext('2d').drawImage(preview1, 0, 0, canvas.width, canvas.height);
-			locked_stickers += selected_sticker;
+			if (selected_sticker !== "empty.png,0,0,1,1,") {
+				locked_stickers += selected_sticker;
+			}
 		}
 		if (sticker.id == "empty.png") {
 			/* disable the take photo button */
@@ -176,7 +178,7 @@ if (!isset($_SESSION['user_id'])) {
 		/* draw the new sticker */
 		preview1.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
 		preview2.getContext('2d').drawImage(sticker, h_offset, v_offset, width, height);
-		/* set values to hidden element */
+		/* save values of selected sticker */
 		selected_sticker = sticker.id+','+h_offset+','+v_offset+','+width+','+height+',';
 	}
 
@@ -190,7 +192,8 @@ if (!isset($_SESSION['user_id'])) {
 		const y = (event.clientY - rect.top) / (rect.bottom - rect.top) * 480 - sticker_values[4] / 2;
 
 		let sticker = document.getElementById(sticker_values[0]);
-		drawSticker(sticker, x, y, sticker_values[3], sticker_values[4],'moved');
+		if (sticker)
+			drawSticker(sticker, x, y, sticker_values[3], sticker_values[4],'moved');
 	}
 
 	preview1.addEventListener('mousedown', function(e) {

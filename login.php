@@ -43,7 +43,7 @@ if (isset($_POST["login"]) && isset($_POST["passwd"]) && auth($pdo, $_POST["logi
 	$stmt->execute([$_POST["login"]]);
 	$_SESSION["user_id"] = $stmt->fetch(PDO::FETCH_COLUMN);
 	header("Location: profile.php");
-} else if ($_POST["login"] && $_POST["passwd"]) {
+} else if (isset($_POST["login"]) && isset($_POST["passwd"])) {
 	$warning_message = "Wrong user or password!";
 }
 ?>

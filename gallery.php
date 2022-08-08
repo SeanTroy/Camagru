@@ -60,7 +60,7 @@ require 'gallery_functions.php';
 							</div>
 							<p id="likes<?= $value['image_id']; ?>"><?= getLikesAmount($value['image_id'], $pdo) ?></p>
 						</div>
-						<?php if ($value['user_id'] == $_SESSION['user_id']) { ?>
+						<?php if (isset($_SESSION['user_id']) && $value['user_id'] == $_SESSION['user_id']) { ?>
 							<form class="trash_and_profile" id="trash<?= $value['image_id']; ?>"
 							action="gallery.php?page=<?= $page ?>&paginate=<?= $images_per_page ?>" method="post">
 								<input type="text" name="image_id" value="<?= $value['image_id']; ?>" hidden>

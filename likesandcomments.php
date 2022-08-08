@@ -81,7 +81,7 @@ if (isset($_SESSION['user_id']) && isset($_POST['comment']) && isset($_POST['com
 			$message = "Someone commented on your picture!" . "\n" . "\n" .
 				$_SESSION['loggued_on_user'] . " wrote the following comment in your picture:" . "\n" . "\n" .
 				"'" . $_POST['comment'] . "'" . "\n" . "\n" .
-				"You can see all the comments in the Camagru gallery: http://localhost:8080/09_Camagru/gallery.php" . "\n";
+				"You can see all the comments in the Camagru gallery: https://camagru.pekkalehtikangas.fi/gallery.php" . "\n";
 			$headers = 'From: camagru.admin@hive.fi' . "\r\n" .
 				'Reply-To: camagru.admin@hive.fi' . "\r\n" .
 				'X-Mailer: PHP/' . phpversion();
@@ -93,7 +93,7 @@ if (isset($_SESSION['user_id']) && isset($_POST['comment']) && isset($_POST['com
 
 /* delete selected comment, double checking user owns it */
 
-if (isset($_SESSION['user_id']) && $_POST['action'] === 'del_comment' && isset($_POST['comment_id']) && isset($_POST['image_id'])) {
+if (isset($_SESSION['user_id']) && isset($_POST['action']) && $_POST['action'] === 'del_comment' && isset($_POST['comment_id']) && isset($_POST['image_id'])) {
 
 	$sql = "SELECT `user_id` FROM `comments` WHERE `comment_id` = ?";
 	$stmt = $pdo->prepare($sql);
