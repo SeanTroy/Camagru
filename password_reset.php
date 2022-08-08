@@ -11,7 +11,7 @@ function sendPasswordEmail($email, $user, $code)
 {
 	$message = "Hello! You requested to reset a forgotten password!" . "\n" . "\n" .
 		"Please click on the following link to create a new password:" . "\n" . "\n" .
-		"https://camagru.pekkalehtikangas.fi/password_reset.php?user=$user&code=$code" . "\n";
+		"http://localhost:8080/09_Camagru/password_reset.php?user=$user&code=$code" . "\n";
 	$headers = 'From: camagru.admin@hive.fi' . "\r\n" .
 		'Reply-To: camagru.admin@hive.fi' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();

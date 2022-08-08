@@ -38,7 +38,7 @@ function sendConfirmationEmail($email, $user, $code)
 {
 	$message = "Hello! Welcome to Camagru!" . "\n" . "\n" .
 		"Please click on the following link to activate your account:" . "\n" . "\n" .
-		"https://camagru.pekkalehtikangas.fi/login.php?user=$user&code=$code" . "\n";
+		"http://localhost:8080/09_Camagru/login.php?user=$user&code=$code" . "\n";
 	$headers = 'From: camagru.admin@hive.fi' . "\r\n" .
 		'Reply-To: camagru.admin@hive.fi' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
