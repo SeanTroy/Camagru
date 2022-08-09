@@ -223,9 +223,23 @@ body {
 	border-radius: 3px;
 }
 
+@media (hover: none) {
+	#video, #canvas {
+		width: 76vw;
+		height: 57vw;
+	}
+}
+
 @media (orientation: landscape) and (hover: none) {
 	.preview_area {
 		width: 99vw;
+	}
+
+	#video, #canvas {
+		width: 44vw;
+		height: 33vw;
+		min-width: 300px;
+		min-height: 225px;
 	}
 
 	.stickerbar {
