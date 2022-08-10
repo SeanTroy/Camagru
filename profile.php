@@ -38,10 +38,15 @@ function userEmail($user_id, $pdo)
 	}
 }
 
-$notify_status = userNotificationStatus($_SESSION["user_id"], $pdo);
-$user_email = userEmail($_SESSION["user_id"], $pdo);
+if (isset($_SESSION["user_id"])) {
+	$notify_status = userNotificationStatus($_SESSION["user_id"], $pdo);
+	$user_email = userEmail($_SESSION["user_id"], $pdo);
+} else {
+	$notify_status = "User not logged in";
+	$user_email = "User not logged in";
+}
 
-if (isset($_POST['submit']) && $_POST['submit'] == "Change notifications") {
+if (isset($_SESSION["user_id"]) && isset($_POST['submit']) && $_POST['submit'] == "Change notifications") {
 	try {
 		if ($notify_status === "YES") {
 			$sql = "UPDATE `users` SET `notify_mail` = 'NO' WHERE `id` = ?";
@@ -67,27 +72,31 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Change notifications") {
 </head>
 
 <body>
-	<?php include 'elements/topbar.html'; ?>
-	<div class="profile_container">
-		<div class="profile_picture">
-			<img id="profile_picture" src="icons/background.jpg">
+	<div class="page-wrap">
+		<?php include 'elements/topbar.html'; ?>
+		<div class="profile_container">
+			<div class="profile_picture">
+				<img id="profile_picture" src="icons/background.jpg">
+			</div>
+			Username: <?php if (isset($_SESSION["loggued_on_user"])) {
+							echo $_SESSION["loggued_on_user"];
+						} ?>
+			<a href="logout.php"><button type="button">Logout</button></a>
+
+			<form method="post" action="modif.php" class="profile_form">
+				<input type="submit" name="submit" value="Change username" />
+				<input type="submit" name="submit" value="Change password" />
+				<br>
+				E-mail: <?= $user_email; ?>
+				<a href="modif.php"><input type="submit" name="submit" value="Change e-mail address" /></a>
+			</form>
+
+			<form method="post" action="profile.php" class="profile_form">
+				E-mail notifications: <?= $notify_status; ?>
+				<input type="submit" name="submit" value="Change notifications" />
+			</form>
+			<button type="button" id="delete_user" onclick=deleteUser()>Delete user</button>
 		</div>
-		Username: <?= $_SESSION["loggued_on_user"]; ?>
-		<a href="logout.php"><button type="button">Logout</button></a>
-
-		<form method="post" action="modif.php" class="profile_form">
-			<input type="submit" name="submit" value="Change username" />
-			<input type="submit" name="submit" value="Change password" />
-			<br>
-			E-mail: <?= $user_email; ?>
-			<a href="modif.php"><input type="submit" name="submit" value="Change e-mail address" /></a>
-		</form>
-
-		<form method="post" action="profile.php" class="profile_form">
-			E-mail notifications: <?= $notify_status; ?>
-			<input type="submit" name="submit" value="Change notifications" />
-		</form>
-		<button type="button" id="delete_user" onclick=deleteUser()>Delete user</button>
 	</div>
 	<?php include 'elements/footer.html'; ?>
 </body>
@@ -101,7 +110,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Change notifications") {
 		xml.onload = function() {
 			profile_picture.src = this.response;
 			if (this.response != "icons/background_orig.jpg") {
-				profile_picture.style="margin-left: -15%;";
+				profile_picture.style = "margin-left: -15%;";
 			}
 		}
 		xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

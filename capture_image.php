@@ -16,50 +16,52 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-	<?php include 'elements/topbar.html'; ?>
-	<div class="editing_area">
-		<div class="preview_area">
-			<div class="capture_preview">
-				<video id="video" autoplay playsinline></video>
-				<! -- 'playsinline' makes the video play in the canvas in mobile -->
-					<canvas id="sticker_preview1" width="640" height="480"></canvas>
-					<figcaption id="title_text">Webcam</figcaption>
-					<button id="take-photo" disabled>Select Sticker</button>
+	<div class="page-wrap">
+		<?php include 'elements/topbar.html'; ?>
+		<div class="editing_area">
+			<div class="preview_area">
+				<div class="capture_preview">
+					<video id="video" autoplay playsinline></video>
+					<! -- 'playsinline' makes the video play in the canvas in mobile -->
+						<canvas id="sticker_preview1" width="640" height="480"></canvas>
+						<figcaption id="title_text">Webcam</figcaption>
+						<button id="take-photo" disabled>Select Sticker</button>
+				</div>
+				<div class="capture_preview">
+					<canvas id="canvas" width="640" height="480"></canvas>
+					<canvas id="sticker_preview2" width="640" height="480"></canvas>
+					<figcaption id="title_text">Preview</figcaption>
+					<button id="save-photo" disabled>Save photo</button>
+				</div>
+				<canvas id="locked_preview" width="640" height="480" hidden></canvas>
+				<div class="stickerbar">
+					<div class="stickerbar_content">
+						<img class="sticker" id="empty.png" src="stickers/empty.png" onclick="drawSticker(this,0,0,1,1,'new')">
+						<img class="sticker" id="42.png" src="stickers/42.png" onclick="drawSticker(this,30,30,180,110,'new')">
+						<img class="sticker" id="fireframe.png" src="stickers/fireframe.png" onclick="drawSticker(this, 0, 0, 640, 480,'new')">
+						<img class="sticker" id="crown.png" src="stickers/crown.png" onclick="drawSticker(this, 200, 0, 240, 160,'new')">
+						<img class="sticker" id="blackhair.png" src="stickers/blackhair.png" onclick="drawSticker(this, 180, 0, 320, 250,'new')">
+						<img class="sticker" id="mario.png" src="stickers/mario.png" onclick="drawSticker(this, 30, 30, 200, 276,'new')">
+						<img class="sticker" id="8bitpipe.png" src="stickers/8bitpipe.png" onclick="drawSticker(this, 120, 150, 400, 400,'new')">
+						<img class="sticker" id="pinkglasses.png" src="stickers/pinkglasses.png" onclick="drawSticker(this, 180, 0, 300, 215,'new')">
+						<img class="sticker" id="moustache.png" src="stickers/moustache.png" onclick="drawSticker(this, 180, 300, 240, 100,'new')">
+						<img class="sticker" id="bloodyscar.png" src="stickers/bloodyscar.png" onclick="drawSticker(this, 200, 100, 180, 60,'new')">
+						<img class="sticker" id="Skullandbones.png" src="stickers/Skullandbones.png" onclick="drawSticker(this, 90, 0, 480, 480,'new')">
+					</div>
+				</div>
 			</div>
-			<div class="capture_preview">
-				<canvas id="canvas" width="640" height="480"></canvas>
-				<canvas id="sticker_preview2" width="640" height="480"></canvas>
-				<figcaption id="title_text">Preview</figcaption>
-				<button id="save-photo" disabled>Save photo</button>
-			</div>
-			<canvas id="locked_preview" width="640" height="480" hidden></canvas>
-			<div class="stickerbar">
-				<div class="stickerbar_content">
-					<img class="sticker" id="empty.png" src="stickers/empty.png" onclick="drawSticker(this,0,0,1,1,'new')">
-					<img class="sticker" id="42.png" src="stickers/42.png" onclick="drawSticker(this,30,30,180,110,'new')">
-					<img class="sticker" id="fireframe.png" src="stickers/fireframe.png" onclick="drawSticker(this, 0, 0, 640, 480,'new')">
-					<img class="sticker" id="crown.png" src="stickers/crown.png" onclick="drawSticker(this, 200, 0, 240, 160,'new')">
-					<img class="sticker" id="blackhair.png" src="stickers/blackhair.png" onclick="drawSticker(this, 180, 0, 320, 250,'new')">
-					<img class="sticker" id="mario.png" src="stickers/mario.png" onclick="drawSticker(this, 30, 30, 200, 276,'new')">
-					<img class="sticker" id="8bitpipe.png" src="stickers/8bitpipe.png" onclick="drawSticker(this, 120, 150, 400, 400,'new')">
-					<img class="sticker" id="pinkglasses.png" src="stickers/pinkglasses.png" onclick="drawSticker(this, 180, 0, 300, 215,'new')">
-					<img class="sticker" id="moustache.png" src="stickers/moustache.png" onclick="drawSticker(this, 180, 300, 240, 100,'new')">
-					<img class="sticker" id="bloodyscar.png" src="stickers/bloodyscar.png" onclick="drawSticker(this, 200, 100, 180, 60,'new')">
-					<img class="sticker" id="Skullandbones.png" src="stickers/Skullandbones.png" onclick="drawSticker(this, 90, 0, 480, 480,'new')">
+			<div class="previous_photos_bar" id="previous_photos_bar">
+				<div class="photo_bar_content" id="photo_bar_content">
+
 				</div>
 			</div>
 		</div>
-		<div class="previous_photos_bar" id="previous_photos_bar">
-			<div class="photo_bar_content" id="photo_bar_content">
-
-			</div>
+		<div class="upload_area">
+			<label for="image-upload" class="styled-image-upload">
+				<text>Upload Image File</text>
+				<input type="file" id="image-upload" accept="image/jpeg, image/png, image/jpg">
+			</label>
 		</div>
-	</div>
-	<div class="upload_area">
-		<label for="image-upload" class="styled-image-upload">
-			<text>Upload Image File</text>
-			<input type="file" id="image-upload" accept="image/jpeg, image/png, image/jpg">
-		</label>
 	</div>
 	<?php include 'elements/footer.html'; ?>
 </body>

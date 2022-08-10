@@ -20,7 +20,8 @@ function confirmPassword($passwd, $confirm_passwd)
 		return FALSE;
 }
 
-function checkNewUser($user, $pdo) {
+function checkNewUser($user, $pdo)
+{
 	$sql = "SELECT `name` FROM `users` WHERE `name` LIKE ?";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([$user]);
@@ -31,7 +32,8 @@ function checkNewUser($user, $pdo) {
 	return TRUE;
 }
 
-function checkNewEmail($email, $pdo) {
+function checkNewEmail($email, $pdo)
+{
 	$sql = "SELECT `email` FROM `users` WHERE `email` LIKE ?";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([$email]);
@@ -46,16 +48,17 @@ function sendChangeEmail($email, $code)
 {
 	$message = "Hello! You requested a change for your e-mail address!" . "\n" . "\n" .
 		"Please confirm this new address by clicking on the following link:" . "\n" . "\n" .
-		"http://localhost:8080/09_Camagru/modif.php?mailchange=yes&code=$code" . "\n";
+		"https://camagru.pekkalehtikangas.fi/modif.php?mailchange=yes&code=$code" . "\n";
 	$headers = 'From: camagru.admin@hive.fi' . "\r\n" .
 		'Reply-To: camagru.admin@hive.fi' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
 	mail($email, 'Email Change Confirmation', $message, $headers);
 }
 
-if (isset($_GET['mailchange']) && isset($_GET['code'])) {
+if (isset($_SESSION['user_id']) && isset($_GET['mailchange']) && isset($_GET['code'])) {
 
-	try {$sql = "SELECT * FROM `email_change` WHERE `user_id` = ? AND `change_code` = ?";
+	try {
+		$sql = "SELECT * FROM `email_change` WHERE `user_id` = ? AND `change_code` = ?";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute([$_SESSION['user_id'], $_GET['code']]);
 		$changedata = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -77,7 +80,7 @@ if (isset($_GET['mailchange']) && isset($_GET['code'])) {
 	}
 }
 
-if (isset($_POST['new_email']) && $_POST["submit"] == "Change e-mail address") {
+if (isset($_SESSION['user_id']) && isset($_POST['new_email']) && isset($_POST["submit"]) && $_POST["submit"] == "Change e-mail address") {
 	if (!filter_var($_POST['new_email'], FILTER_VALIDATE_EMAIL)) {
 		$warning_message = "Please enter a valid e-mail address!";
 	} else if (!(checkNewEmail($_POST["new_email"], $pdo))) {
@@ -94,7 +97,7 @@ if (isset($_POST['new_email']) && $_POST["submit"] == "Change e-mail address") {
 	}
 }
 
-if (isset($_POST['newuser']) && $_POST["submit"] == "Change username") {
+if (isset($_SESSION['user_id']) && isset($_POST['newuser']) && isset($_POST["submit"]) && $_POST["submit"] == "Change username") {
 	if (strlen($_POST["newuser"]) > 25) {
 		$warning_message = "Username is too long. Maximum length is 25 characters.";
 	} else if (!preg_match('/^[a-z0-9]+$/i', $_POST["newuser"])) {
@@ -110,7 +113,10 @@ if (isset($_POST['newuser']) && $_POST["submit"] == "Change username") {
 	}
 }
 
-if (isset($_POST['newpw']) && $_POST["submit"] == "Change password") {
+if (
+	isset($_SESSION['user_id']) && isset($_SESSION['loggued_on_user']) && isset($_POST['newpw']) && isset($_POST['oldpw'])
+	&& isset($_POST["submit"]) && $_POST["submit"] == "Change password"
+) {
 	if (!confirmPassword($_POST["newpw"], $_POST['confirm_newpw'])) {
 		$warning_message = "The entered passwords are not the same!";
 	} else if (!preg_match('/(?=^.{8,30}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?=.*[A-Z])(?=.*[a-z]).*$/', $_POST["newpw"])) {
@@ -146,43 +152,43 @@ if (isset($_POST['newpw']) && $_POST["submit"] == "Change password") {
 </head>
 
 <body>
-	<?php
-	include 'elements/topbar.html';
-	?>
-	<div class="profile_container">
-		<?php if ($_POST["submit"] == "Change username") : ?>
-		<form name="username_modify" action="modif.php" method="post" class="profile_form">
-			<h3>CHANGE USERNAME HERE</h3>
-			New username: <input type="text" name="newuser" value="" autocomplete="off" required />
-			<br />
-			<input type="submit" name="submit" value="Change username" />
-			<p id="warning_message"><?= $warning_message ?></p>
-			<p id="success_message"><?= $success_message ?></p>
-		</form>
-		<?php elseif ($_POST["submit"] == "Change password") : ?>
-		<form name="password_modify" action="modif.php" method="post" class="profile_form">
-			<h3>CHANGE PASSWORD HERE</h3>
-			Old password: <input type="password" name="oldpw" value="" required />
-			<br />
-			New password: <input type="password" name="newpw" value="" required />
-			<br />
-			Confirm new password: <input type="password" name="confirm_newpw" value="" required />
-			<br />
-			<input type="submit" name="submit" value="Change password" />
-			<p id="warning_message"><?= $warning_message ?></p>
-			<p id="success_message"><?= $success_message ?></p>
-		</form>
-		<?php elseif ($_POST["submit"] == "Change e-mail address") : ?>
-		<form name="email_modify" action="modif.php" method="post" class="profile_form">
-			<h3>CHANGE E-MAIL HERE</h3>
-			Please enter a new e-mail address:
-			<input type="email" name="new_email" value="" required />
-			<br />
-			<input type="submit" name="submit" value="Change e-mail address" />
-			<p id="warning_message"><?= $warning_message ?></p>
-			<p id="success_message"><?= $success_message ?></p>
-		</form>
-		<?php endif ?>
+	<div class="page-wrap">
+		<?php include 'elements/topbar.html'; ?>
+		<div class="profile_container">
+			<?php if (isset($_POST["submit"]) && $_POST["submit"] == "Change username") : ?>
+				<form name="username_modify" action="modif.php" method="post" class="profile_form">
+					<h3>CHANGE USERNAME HERE</h3>
+					New username: <input type="text" name="newuser" value="" autocomplete="off" required />
+					<br />
+					<input type="submit" name="submit" value="Change username" />
+					<p id="warning_message"><?= $warning_message ?></p>
+					<p id="success_message"><?= $success_message ?></p>
+				</form>
+			<?php elseif (isset($_POST["submit"]) && $_POST["submit"] == "Change password") : ?>
+				<form name="password_modify" action="modif.php" method="post" class="profile_form">
+					<h3>CHANGE PASSWORD HERE</h3>
+					Old password: <input type="password" name="oldpw" value="" required />
+					<br />
+					New password: <input type="password" name="newpw" value="" required />
+					<br />
+					Confirm new password: <input type="password" name="confirm_newpw" value="" required />
+					<br />
+					<input type="submit" name="submit" value="Change password" />
+					<p id="warning_message"><?= $warning_message ?></p>
+					<p id="success_message"><?= $success_message ?></p>
+				</form>
+			<?php elseif (isset($_POST["submit"]) && $_POST["submit"] == "Change e-mail address") : ?>
+				<form name="email_modify" action="modif.php" method="post" class="profile_form">
+					<h3>CHANGE E-MAIL HERE</h3>
+					Please enter a new e-mail address:
+					<input type="email" name="new_email" value="" required />
+					<br />
+					<input type="submit" name="submit" value="Change e-mail address" />
+					<p id="warning_message"><?= $warning_message ?></p>
+					<p id="success_message"><?= $success_message ?></p>
+				</form>
+			<?php endif ?>
+		</div>
 	</div>
 	<?php include 'elements/footer.html'; ?>
 </body>

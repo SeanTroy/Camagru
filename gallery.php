@@ -13,78 +13,77 @@ require 'gallery_functions.php';
 </head>
 
 <body>
-	<?php
-	include 'elements/topbar.html';
-	?>
-	<div class="pagination_container">
-		<div class="pagination">
-			<a href=<?= "?page=1" . "&paginate=" . $images_per_page; ?>>First</a>
-			<a href="<?php if ($page == 1) : echo '#';
-						else : echo "?page=" . ($page - 1) . "&paginate=" . $images_per_page;
-						endif ?>">&laquo;</a>
-			<text><?= $page . "/" . $total_pages; ?></text>
-			<a href="<?php if ($page >= $total_pages) : echo '#';
-						else : echo "?page=" . ($page + 1) . "&paginate=" . $images_per_page;
-						endif ?>">&raquo;</a>
-			<a href="?page=<?= $total_pages . "&paginate=" . $images_per_page; ?>">Last</a><br>
-		</div>
-		<nav>
-			<text id="photo_select">Photos per page:</text>
-			<select id="photo_amount" onChange="window.location.href=this.value" name="categories" id="categories">
-				<option value="?paginate=5">5</option>
-				<option value="?paginate=10">10</option>
-				<option value="?paginate=20">20</option>
-				<option value="?paginate=50">50</option>
-				<option value="?paginate=100">100</option>
-			</select>
-		</nav>
-	</div>
-	<div class="gallery">
-		<?php
-		foreach ($images as $key => $value) {
-			$base64 = $value['image_data'];
-			$image = "data:image/jpeg;base64," . $base64;
-		?>
-			<div id="picture_with_buttons">
-				<figure>
-					<p id="image_user_tag"><?= $value['name']; ?> <?= $value['time']; ?></p>
-					<img id="<?= $value['image_id']; ?>" src="<?= $image; ?>">
-					<div class="delete_like_container">
-						<div class="like_container">
-							<div class="heart_picture">
-								<?php if (!checkUserLikes($value['image_id'], $pdo)) : ?>
-									<img alt="Like" title="Like" id="heart<?= $value['image_id']; ?>" src="icons/heart_empty.png" onclick=changeLikes(this.id)>
-								<?php else : ?>
-									<img alt="Like" title="Like" id="heart<?= $value['image_id']; ?>" src="icons/heart_full.png" onclick=changeLikes(this.id)>
-								<?php endif ?>
-							</div>
-							<p id="likes<?= $value['image_id']; ?>"><?= getLikesAmount($value['image_id'], $pdo) ?></p>
-						</div>
-						<?php if (isset($_SESSION['user_id']) && $value['user_id'] == $_SESSION['user_id']) { ?>
-							<form class="trash_and_profile" id="trash<?= $value['image_id']; ?>"
-							action="gallery.php?page=<?= $page ?>&paginate=<?= $images_per_page ?>" method="post">
-								<input type="text" name="image_id" value="<?= $value['image_id']; ?>" hidden>
-								<input type="text" name="action" value="delete" hidden>
-								<?php if ($profile_pict_id != $value['image_id']) : ?>
-									<img class="profile_icon" alt="Make profile picture" title="Make profile picture" src="icons/profile.png" onclick="setProfile(this, <?= $value['image_id']; ?>)">
-								<?php else : ?>
-									<img id="profile_icon_select" alt="Remove profile picture" title="Remove profile picture" src="icons/profile_selected.png" onclick="setProfile(this, <?= $value['image_id']; ?>)">
-								<?php endif ?>
-								<img class="trash_icon" alt="Delete" title="Delete" src="icons/trashcan.png" onclick="deletePhoto(<?= $value['image_id']; ?>)">
-							</form>
-						<?php } ?>
-					</div>
-					<figcaption id="comments<?= $value['image_id']; ?>">
-						<?= showComments($value['image_id'], $pdo) ?>
-					</figcaption>
-				</figure>
-				<form class="gallery_form" id="gallery_form<?= $value['image_id']; ?>" method="post">
-					<input type="text" name="comment_img_id" value="<?= $value['image_id']; ?>" hidden>
-					<input type="text" class="like_comment" name="comment" maxlength="160" autocomplete="off" required>
-					<button class="like_comment" onclick="addComment(<?= $value['image_id']; ?>)">Add comment</button>
-				</form>
+	<div class="page-wrap">
+		<?php include 'elements/topbar.html'; ?>
+		<div class="pagination_container">
+			<div class="pagination">
+				<a href=<?= "?page=1" . "&paginate=" . $images_per_page; ?>>First</a>
+				<a href="<?php if ($page == 1) : echo '#';
+							else : echo "?page=" . ($page - 1) . "&paginate=" . $images_per_page;
+							endif ?>">&laquo;</a>
+				<text><?= $page . "/" . $total_pages; ?></text>
+				<a href="<?php if ($page >= $total_pages) : echo '#';
+							else : echo "?page=" . ($page + 1) . "&paginate=" . $images_per_page;
+							endif ?>">&raquo;</a>
+				<a href="?page=<?= $total_pages . "&paginate=" . $images_per_page; ?>">Last</a><br>
 			</div>
-		<?php } ?>
+			<nav>
+				<text id="photo_select">Photos per page:</text>
+				<select id="photo_amount" onChange="window.location.href=this.value" name="categories" id="categories">
+					<option value="?paginate=5">5</option>
+					<option value="?paginate=10">10</option>
+					<option value="?paginate=20">20</option>
+					<option value="?paginate=50">50</option>
+					<option value="?paginate=100">100</option>
+				</select>
+			</nav>
+		</div>
+		<div class="gallery">
+			<?php
+			foreach ($images as $key => $value) {
+				$base64 = $value['image_data'];
+				$image = "data:image/jpeg;base64," . $base64;
+			?>
+				<div id="picture_with_buttons">
+					<figure>
+						<p id="image_user_tag"><?= $value['name']; ?> <?= $value['time']; ?></p>
+						<img id="<?= $value['image_id']; ?>" src="<?= $image; ?>">
+						<div class="delete_like_container">
+							<div class="like_container">
+								<div class="heart_picture">
+									<?php if (!checkUserLikes($value['image_id'], $pdo)) : ?>
+										<img alt="Like" title="Like" id="heart<?= $value['image_id']; ?>" src="icons/heart_empty.png" onclick=changeLikes(this.id)>
+									<?php else : ?>
+										<img alt="Like" title="Like" id="heart<?= $value['image_id']; ?>" src="icons/heart_full.png" onclick=changeLikes(this.id)>
+									<?php endif ?>
+								</div>
+								<p id="likes<?= $value['image_id']; ?>"><?= getLikesAmount($value['image_id'], $pdo) ?></p>
+							</div>
+							<?php if (isset($_SESSION['user_id']) && $value['user_id'] == $_SESSION['user_id']) { ?>
+								<form class="trash_and_profile" id="trash<?= $value['image_id']; ?>" action="gallery.php?page=<?= $page ?>&paginate=<?= $images_per_page ?>" method="post">
+									<input type="text" name="image_id" value="<?= $value['image_id']; ?>" hidden>
+									<input type="text" name="action" value="delete" hidden>
+									<?php if ($profile_pict_id != $value['image_id']) : ?>
+										<img class="profile_icon" alt="Make profile picture" title="Make profile picture" src="icons/profile.png" onclick="setProfile(this, <?= $value['image_id']; ?>)">
+									<?php else : ?>
+										<img id="profile_icon_select" alt="Remove profile picture" title="Remove profile picture" src="icons/profile_selected.png" onclick="setProfile(this, <?= $value['image_id']; ?>)">
+									<?php endif ?>
+									<img class="trash_icon" alt="Delete" title="Delete" src="icons/trashcan.png" onclick="deletePhoto(<?= $value['image_id']; ?>)">
+								</form>
+							<?php } ?>
+						</div>
+						<figcaption id="comments<?= $value['image_id']; ?>">
+							<?= showComments($value['image_id'], $pdo) ?>
+						</figcaption>
+					</figure>
+					<form class="gallery_form" id="gallery_form<?= $value['image_id']; ?>" method="post">
+						<input type="text" name="comment_img_id" value="<?= $value['image_id']; ?>" hidden>
+						<input type="text" class="like_comment" name="comment" maxlength="160" autocomplete="off" required>
+						<button class="like_comment" onclick="addComment(<?= $value['image_id']; ?>)">Add comment</button>
+					</form>
+				</div>
+			<?php } ?>
+		</div>
 	</div>
 	<?php include 'elements/footer.html'; ?>
 </body>

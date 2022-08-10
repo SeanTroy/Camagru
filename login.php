@@ -55,23 +55,25 @@ if (isset($_POST["login"]) && isset($_POST["passwd"]) && auth($pdo, $_POST["logi
 </head>
 
 <body>
-	<?php include 'elements/topbar.html'; ?>
-	<div class="profile_container">
-		<br>
-		<h3>LOGIN HERE TO ENTER CAMAGRU</h3>
-		<form name="login" action="login.php" method="post" class="profile_form">
-			Username: <input type="text" name="login" value="" required />
-			<br />
-			Password: <input type="password" name="passwd" value="" required />
+	<div class="page-wrap">
+		<?php include 'elements/topbar.html'; ?>
+		<div class="profile_container">
 			<br>
-			<input type="submit" name="submit" value="OK" />
-		</form>
-		<a href="password_reset.php"><button>Forgot Password</button></a>
-		<hr id="divider_line">
-		<h3>NOT SIGNED UP YET?</h3>
-		<a href="signup.php"><button>Create new user account</button></a>
-		<p id="warning_message"><?= $warning_message ?></p>
-		<p id="success_message"><?= $success_message ?></p>
+			<h3>LOGIN HERE TO ENTER CAMAGRU</h3>
+			<form name="login" action="login.php" method="post" class="profile_form">
+				Username: <input type="text" name="login" value="" required />
+				<br />
+				Password: <input type="password" name="passwd" value="" required />
+				<br>
+				<input type="submit" name="submit" value="OK" />
+			</form>
+			<a href="password_reset.php"><button>Forgot Password</button></a>
+			<hr id="divider_line">
+			<h3>NOT SIGNED UP YET?</h3>
+			<a href="signup.php"><button>Create new user account</button></a>
+			<p id="warning_message"><?= $warning_message ?></p>
+			<p id="success_message"><?= $success_message ?></p>
+		</div>
 	</div>
 	<?php include 'elements/footer.html'; ?>
 </body>

@@ -9,6 +9,10 @@ body {
 	margin: 0;
 }
 
+.page-wrap {
+	min-height: 93vh;
+}
+
 /* top navigation bar */
 
 .top {
@@ -24,6 +28,8 @@ body {
 
 .topbaritems {
 	width: 100%;
+	margin-top: 1vw;
+	margin-bottom: 1vw;
 	display: flex;
 	align-items: center; /* centers the items vertically */
 	justify-content: space-evenly;
@@ -358,7 +364,10 @@ input[type=text], input[type=password], input[type=email]  {
 /* footer*/
 
 .footer {
+	margin: 0;
 	margin-top: 1vw;
+	margin-bottom: 1vh;
+	height: 2vh;
 	position: relative;
 }
 
@@ -371,7 +380,9 @@ input[type=text], input[type=password], input[type=email]  {
 
 #copyright {
 	text-align: right;
-	margin-right: 20px;
+	padding: 0.5vw;
+	padding-top: 0;
+	margin-right: 1vw;
 	font-style: italic;
 	font-size: max(1.2vw, 12px);
 }

@@ -11,7 +11,7 @@ function sendPasswordEmail($email, $user, $code)
 {
 	$message = "Hello! You requested to reset a forgotten password!" . "\n" . "\n" .
 		"Please click on the following link to create a new password:" . "\n" . "\n" .
-		"http://localhost:8080/09_Camagru/password_reset.php?user=$user&code=$code" . "\n";
+		"https://camagru.pekkalehtikangas.fi/password_reset.php?user=$user&code=$code" . "\n";
 	$headers = 'From: camagru.admin@hive.fi' . "\r\n" .
 		'Reply-To: camagru.admin@hive.fi' . "\r\n" .
 		'X-Mailer: PHP/' . phpversion();
@@ -59,7 +59,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Send e-mail") {
 
 		$email = $stmt->fetch(PDO::FETCH_COLUMN);
 		$success_message = "If this username or e-mail exists in the database, an e-mail has been sent. " .
-		"Please check your inbox for a link to reset your password.";
+			"Please check your inbox for a link to reset your password.";
 
 		if ($email) {
 			$sql = "UPDATE `users` SET `forgot_pw_code` = ? WHERE `name` = ?";
@@ -76,7 +76,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Send e-mail") {
 
 		$user = $stmt->fetch(PDO::FETCH_COLUMN);
 		$success_message = "If this username or e-mail exists in the database, an e-mail has been sent. " .
-		"Please check your inbox for a link to reset your password.";
+			"Please check your inbox for a link to reset your password.";
 
 		if ($user) {
 			$sql = "UPDATE `users` SET `forgot_pw_code` = ? WHERE `email` = ?";
@@ -98,38 +98,38 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Send e-mail") {
 </head>
 
 <body>
-	<?php
-	include 'elements/topbar.html';
-	?>
-	<?php if ($tempuser !== "") : ?>
-		<div class="profile_container">
-			<h3>PLEASE ENTER A NEW PASSWORD</h3>
-			<form name="reset" action="password_reset.php" method="post" class="profile_form">
-				<input type="text" name="login" value="<?= $tempuser ?>" hidden />
-				New password: <input type="password" name="resetpw" value="" required />
-				<br />
-				Confirm password: <input type="password" name="confirm_resetpw" value="" required />
-				<br />
-				<input type="submit" name="submit" value="OK" />
-			</form>
-			<p id="warning_message"><?= $warning_message ?></p>
-			<p id="success_message"><?= $success_message ?></p>
-		</div>
-	<?php else : ?>
-		<div class="profile_container">
-			<h3>PLEASE ENTER YOUR USERNAME OR E-MAIL TO RESET PASSWORD</h3>
-			<form name="user_info" action="password_reset.php" method="post" class="profile_form">
-				Username: <input type="text" name="login" autocomplete="off" value="" />
-				<br />
-				E-mail: <input type="email" name="email" autocomplete="off" value="" />
-				<br />
-				<input type="submit" name="submit" value="Send e-mail" />
-			</form>
-			<p id="warning_message"><?= $warning_message ?></p>
-			<p id="success_message"><?= $success_message ?></p>
-		</div>
-	<?php endif;
-	include 'elements/footer.html'; ?>
+	<div class="page-wrap">
+		<?php include 'elements/topbar.html'; ?>
+		<?php if ($tempuser !== "") : ?>
+			<div class="profile_container">
+				<h3>PLEASE ENTER A NEW PASSWORD</h3>
+				<form name="reset" action="password_reset.php" method="post" class="profile_form">
+					<input type="text" name="login" value="<?= $tempuser ?>" hidden />
+					New password: <input type="password" name="resetpw" value="" required />
+					<br />
+					Confirm password: <input type="password" name="confirm_resetpw" value="" required />
+					<br />
+					<input type="submit" name="submit" value="OK" />
+				</form>
+				<p id="warning_message"><?= $warning_message ?></p>
+				<p id="success_message"><?= $success_message ?></p>
+			</div>
+		<?php else : ?>
+			<div class="profile_container">
+				<h3>PLEASE ENTER YOUR USERNAME OR E-MAIL TO RESET PASSWORD</h3>
+				<form name="user_info" action="password_reset.php" method="post" class="profile_form">
+					Username: <input type="text" name="login" autocomplete="off" value="" />
+					<br />
+					E-mail: <input type="email" name="email" autocomplete="off" value="" />
+					<br />
+					<input type="submit" name="submit" value="Send e-mail" />
+				</form>
+				<p id="warning_message"><?= $warning_message ?></p>
+				<p id="success_message"><?= $success_message ?></p>
+			</div>
+		<?php endif; ?>
+	</div>
+	<?php include 'elements/footer.html'; ?>
 </body>
 
 </html>

@@ -19,7 +19,7 @@ $row_count = $stmt->rowCount();
 if ($row_count < 18) {
 	$needed_rows = 18 - $row_count;
 	while ($needed_rows > 0) {
-		array_push($index_images, array('image_data'=>'icons/background_43.jpg'));
+		array_push($index_images, array('image_data' => 'icons/background_43.jpg'));
 		$needed_rows--;
 	}
 }
@@ -33,23 +33,25 @@ if ($row_count < 18) {
 </head>
 
 <body>
-	<?php include 'elements/topbar.html'; ?>
-	<div class="index_container">
-		<?php
-		foreach ($index_images as $key => $value) {
-			$base64 = $value['image_data'];
-			if ($base64 === 'icons/background_43.jpg')
-				$image = $base64;
-			else
-				$image = "data:image/jpeg;base64," . $base64;
-		?>
-			<img class="index_picture" id="<?= $key; ?>" src="<?= $image; ?>" style="opacity: 0">
-		<?php } ?>
-		<div class="title_container" id="title" style="opacity: 0">
-			<img id="title-logo" src="icons/polaroid_logo.png">
-			<div class="title-text">
-				<h3>CAMAGRU</h3>
-				<text>THE PICTURE HIVE</text>
+	<div class="page-wrap">
+		<?php include 'elements/topbar.html'; ?>
+		<div class="index_container">
+			<?php
+			foreach ($index_images as $key => $value) {
+				$base64 = $value['image_data'];
+				if ($base64 === 'icons/background_43.jpg')
+					$image = $base64;
+				else
+					$image = "data:image/jpeg;base64," . $base64;
+			?>
+				<img class="index_picture" id="<?= $key; ?>" src="<?= $image; ?>" style="opacity: 0">
+			<?php } ?>
+			<div class="title_container" id="title" style="opacity: 0">
+				<img id="title-logo" src="icons/polaroid_logo.png">
+				<div class="title-text">
+					<h3>CAMAGRU</h3>
+					<text>THE PICTURE HIVE</text>
+				</div>
 			</div>
 		</div>
 	</div>
