@@ -7,10 +7,12 @@ body {
 	background-size: cover; /* scales the image until it has met the actual height / width */
 	font-family: Neucha;
 	margin: 0;
+	display: flex;
+	flex-direction: column;
 }
 
 .page-wrap {
-	min-height: 93vh;
+	min-height: 90vh;
 }
 
 /* top navigation bar */
@@ -366,9 +368,9 @@ input[type=text], input[type=password], input[type=email]  {
 .footer {
 	margin: 0;
 	margin-top: 1vw;
-	margin-bottom: 1vh;
+	margin-bottom: 4vh;
 	height: 2vh;
-	position: relative;
+	align-self: flex-end;
 }
 
 #footer_line {
@@ -387,6 +389,12 @@ input[type=text], input[type=password], input[type=email]  {
 	font-size: max(1.2vw, 12px);
 }
 
+@media (orientation: landscape) and (hover: none) {
+	.footer {
+		margin-bottom: 5vw;
+	}
+}
+
 /* login page */
 
 #divider_line {
@@ -399,8 +407,8 @@ input[type=text], input[type=password], input[type=email]  {
 /* index page */
 
 .index_container {
-	width: 64vw;
-	max-height: 48vw;
+	width: 80vw;
+	max-height: 60vw;
 	overflow: hidden;
 	border: 0.05vw solid;
 	border-radius: 5px;
@@ -414,7 +422,7 @@ input[type=text], input[type=password], input[type=email]  {
 }
 
 .index_picture {
-	width: 15vw;
+	width: 19vw;
 	margin: 0.5vw;
 	margin-bottom: 0.2vw;
 	transition: opacity 0.5s ease-in-out;
@@ -426,10 +434,10 @@ input[type=text], input[type=password], input[type=email]  {
 	justify-content: center;
 	align-items: center;
 	border-radius: 1vw;
-	top: 25vw;
+	top: 31vw;
 	background-color: white;
 	height: 12vw;
-	width: 40vw;
+	width: 50vw;
 	transition: opacity 1s ease-in-out;
 	box-shadow: 0.5vw 0.5vw 1vw black; /* drop shadow with 0.5vw distance and 1vw softness */
 }
@@ -459,7 +467,7 @@ input[type=text], input[type=password], input[type=email]  {
 	letter-spacing: 0.5vw;
 }
 
-@media (orientation: portrait) and (hover: none) {
+@media (orientation: portrait) {
 	.index_container {
 		width: 96vw;
 		max-height: 350vw;
