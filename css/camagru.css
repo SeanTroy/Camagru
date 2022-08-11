@@ -45,7 +45,7 @@ body {
 .topbaritems button {
 	background-color: transparent;
 	border-color: transparent;
-	font-size: clamp(12px, 2vw, 36px);
+	font-size: min(3vw, 36px);
 	font-family : inherit;
 	color: black;
 	cursor: pointer;
@@ -386,7 +386,7 @@ input[type=text], input[type=password], input[type=email]  {
 	padding-top: 0;
 	margin-right: 1vw;
 	font-style: italic;
-	font-size: max(1.2vw, 12px);
+	font-size: min(2vw, 20px);
 }
 
 @media (orientation: landscape) and (hover: none) {
