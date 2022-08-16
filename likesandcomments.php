@@ -70,7 +70,7 @@ function showComments($image_id, $pdo)
 
 if (isset($_SESSION['user_id']) && isset($_POST['comment']) && isset($_POST['comment_img_id'])) {
 
-	if ($_POST['comment'] !== "") {
+	if ($_POST['comment'] !== "" && strlen($_POST['comment']) <= 160) {
 
 		$comment = filter_var($_POST['comment'], FILTER_SANITIZE_SPECIAL_CHARS); /* prevents input of html code */
 		$sql = "INSERT INTO `comments` (`image_id`, `user_id`, `comment`) VALUES (?, ?, ?)";
